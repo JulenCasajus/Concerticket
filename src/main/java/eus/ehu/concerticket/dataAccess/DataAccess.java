@@ -1,7 +1,6 @@
-package eus.ehu.template.dataAccess;
+package eus.ehu.concerticket.dataAccess;
 
-import eus.ehu.template.configuration.Config;
-import eus.ehu.template.domain.*;
+import eus.ehu.concerticket.configuration.Config;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.hibernate.boot.MetadataSources;
@@ -18,15 +17,12 @@ public class DataAccess {
   protected EntityManagerFactory emf;
 
   public DataAccess() {
-
     this.open();
-
   }
 
   public void open() {
     open(false);
   }
-
 
   public void open(boolean initializeMode) {
 
@@ -78,24 +74,24 @@ public class DataAccess {
 
       db.getTransaction().commit();
       System.out.println("The database has been initialized");
-
-
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
-
-
   private void generateTestingData() {
     // create domain entities and persist them
   }
 
-
+  private String formatName(String name) {
+    if (name == null || name.isEmpty()) {
+      return name;
+    }
+    return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+  }
 
   public void close() {
     db.close();
     System.out.println("DataBase is closed");
   }
-
 }

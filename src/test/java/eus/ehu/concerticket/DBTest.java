@@ -1,6 +1,6 @@
-package eus.ehu.template;
+package eus.ehu.concerticket;
 
-import eus.ehu.template.dataAccess.DataAccess;
+import eus.ehu.concerticket.dataAccess.DataAccess;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -17,7 +17,7 @@ A JavaFX+Hibernate+H2+JUnit template for the Software Engineering class of the F
     Change the value to the path where you want to store the database. In this case,
   the database will be stored in the home folder of the user.
 
-* Rename the package (from eus.ehu.template to eus.ehu.XXXXX where XXXX is your package name)
+* Rename the package (from eus.ehu.concerticket to eus.ehu.XXXXX where XXXX is your package name)
 * Rename the module (from template to XXXXX where XXXX is your module name)
 * You may need to change the controller path in the hello-view.fxml file
 * Remember that, by default, the open mode of the db is `initialize` (this property is set in the `config.properties` file. 

@@ -1,6 +1,6 @@
-package eus.ehu.template.businessLogic;
+package eus.ehu.concerticket.businessLogic;
 
-// import eus.ehu.template.domain.Hello;
+// import eus.ehu.concerticket.domain.Hello;
 
 /**
  * Interface that specifies the business logic.

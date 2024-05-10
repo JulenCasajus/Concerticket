@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>eus.ehu</groupId>
-    <artifactId>template</artifactId>
+    <artifactId>concerticket</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>template</name>
 
@@ -97,7 +97,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>eus.ehu.template/eus.ehu.template.ui.HelloApplication</mainClass>
+                            <mainClass>eus.ehu.template/eus.ehu.concerticket.ui.HelloApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

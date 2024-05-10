@@ -1,9 +1,7 @@
-package eus.ehu.template.businessLogic;
+package eus.ehu.concerticket.businessLogic;
 
-import eus.ehu.template.configuration.Config;
-import eus.ehu.template.dataAccess.DataAccess;
-
-import java.util.Calendar;
+import eus.ehu.concerticket.configuration.Config;
+import eus.ehu.concerticket.dataAccess.DataAccess;
 
 
 /**
@@ -20,7 +18,7 @@ public class BlFacadeImplementation implements BlFacade {
         return bl;
     }
 
-    private BlFacadeImplementation() {
+    public BlFacadeImplementation() {
         System.out.println("Creating BlFacadeImplementation instance");
         boolean initialize = config.getDataBaseOpenMode().equals("initialize");
         dbManager = new DataAccess();

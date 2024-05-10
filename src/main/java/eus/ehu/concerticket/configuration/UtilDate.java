@@ -1,4 +1,4 @@
-package eus.ehu.template.configuration;
+package eus.ehu.concerticket.configuration;
 
 import java.time.LocalDate;
 import java.time.ZoneId;

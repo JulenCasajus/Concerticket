@@ -7,7 +7,7 @@ module eus.ehu.sharetrip {
     requires org.hibernate.orm.core;
     requires org.apache.logging.log4j;
 
-    opens eus.ehu.template.domain to org.hibernate.orm.core;
-    opens eus.ehu.template.ui to javafx.fxml;
-    exports eus.ehu.template.ui;
+    opens eus.ehu.concerticket.domain to org.hibernate.orm.core;
+    opens eus.ehu.concerticket.ui to javafx.fxml;
+    exports eus.ehu.concerticket.ui;
 }

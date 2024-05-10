@@ -1,4 +1,4 @@
-package eus.ehu.template.configuration;
+package eus.ehu.concerticket.configuration;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -37,8 +37,15 @@ public class Config {
 		return prop.getProperty("db.name");
 	}
 
+	public boolean isBusinessLogicLocal() {
+		return prop.getProperty("isBusinessLogicLocal").equals("true");
+	}
+
+	public String getLocale() {
+		return prop.getProperty("locale");
+	}
+
 	public boolean isDataAccessLocal() {
 		return prop.getProperty("db.local").equals("true");
 	}
-
 }
