@@ -26,7 +26,6 @@ public class Config {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
-
 	}
 
 	public String getDataBaseOpenMode() {

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="eus.ehu.concerticket.uicontrollers.LogInController">
+   <Label layoutX="412.0" layoutY="100.0" prefHeight="32.0" text="%LogIn" textAlignment="CENTER">
+      <font>
+         <Font size="24.0"/>
+      </font>
+   </Label>
+   <TextField fx:id="UserField" layoutX="315.0" layoutY="150.0" prefHeight="32.0" prefWidth="250.0"
+              promptText="%UsernameOrEmailAddress"/>
+   <PasswordField fx:id="PasswordField" layoutX="315.0" layoutY="200.0" prefHeight="32.0" prefWidth="250.0"
+                  promptText="%Password"/>
+   <Button layoutX="315.0" layoutY="250.0" mnemonicParsing="false" onAction="#LogInBtnClick" prefHeight="32.0"
+           prefWidth="250.0" text="%LogIn" textAlignment="CENTER">
+      <cursor>
+         <Cursor fx:constant="HAND"/>
+      </cursor>
+   </Button>
+   <Label fx:id="done" alignment="CENTER" layoutX="315.0" layoutY="350.0" prefHeight="32.0" prefWidth="250.0"
+          textAlignment="RIGHT">
+      <font>
+         <Font size="26.0"/>
+      </font>
+   </Label>
+   <Label layoutX="340.0" layoutY="300.0" prefHeight="32.0" text="Don't have an account?" textAlignment="CENTER"/>
+   <Button fx:id="logInButton" blendMode="HARD_LIGHT" layoutX="478.5" layoutY="300.0" mnemonicParsing="false"
+           onAction="#SignUpBtnClick" prefHeight="32.0" text="%SignUp" textFill="#0042ff">
+      <opaqueInsets>
+         <Insets/>
+      </opaqueInsets>
+      <cursor>
+         <Cursor fx:constant="HAND"/>
+      </cursor>
+   </Button>
+</AnchorPane>

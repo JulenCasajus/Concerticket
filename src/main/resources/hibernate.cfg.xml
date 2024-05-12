@@ -5,13 +5,16 @@
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
         <property name="hibernate.connection.driver_class">org.h2.Driver</property>
-        <property name="hibernate.connection.url">jdbc:h2:~/shareTrip;AUTO_SERVER=TRUE;</property>
-        <property name="hibernate.connection.username">sa</property>
-        <property name="hibernate.connection.password"></property>
+        <property name="hibernate.connection.url">jdbc:h2:~/concerticket;AUTO_SERVER=TRUE;</property>
         <property name="hibernate.show_sql">true</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
-
+        <property name="hibernate.hbm2ddl.auto">create</property>
         <property name="hibernate.physical_naming_strategy">org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl</property>
-        <mapping class="eus.ehu.concerticket.domain.Hello" />
+        <mapping class="eus.ehu.concerticket.domain.Group" />
+        <mapping class="eus.ehu.concerticket.domain.User" />
+        <mapping class="eus.ehu.concerticket.domain.Client" />
+        <mapping class="eus.ehu.concerticket.domain.Concert" />
+        <mapping class="eus.ehu.concerticket.domain.Place" />
+        <mapping class="eus.ehu.concerticket.domain.Purchase" />
+        <mapping class="eus.ehu.concerticket.domain.Staff" />
     </session-factory>
 </hibernate-configuration>

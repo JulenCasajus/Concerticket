@@ -9,7 +9,6 @@ import java.util.TimeZone;
 public class UtilDate {
 
 	public static Date trim(Date date) {
-
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeZone(TimeZone.getTimeZone("CET"));
 		calendar.setTime(date);
@@ -65,7 +64,6 @@ public class UtilDate {
 
 		return ldate1.getYear() == ldate2.getYear() &&
 				ldate1.getMonthValue() == ldate2.getMonthValue() &&
-				ldate1.getDayOfMonth() == ldate2.getDayOfMonth() ;
-
+				ldate1.getDayOfMonth() == ldate2.getDayOfMonth();
 	}
 }

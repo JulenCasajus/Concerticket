@@ -1,21 +1,14 @@
 package eus.ehu.concerticket.ui;
 
 import eus.ehu.concerticket.businessLogic.BlFacade;
-import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
-import org.kordamp.bootstrapfx.BootstrapFX;
 import eus.ehu.concerticket.uicontrollers.Controller;
-
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import java.io.IOException;
 
 public class MainGUI {
     private BlFacade businessLogic;
@@ -28,7 +21,7 @@ public class MainGUI {
         Platform.startup(() -> {
             try {
                 setBusinessLogic(bl);
-                initialize(new Stage());
+                init(new Stage());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -43,7 +36,8 @@ public class MainGUI {
         businessLogic = afi;
     }
 
-    public void initialize(Stage stage) throws IOException {
+    public void init(Stage stage) throws IOException {
+
         FXMLLoader loader = new FXMLLoader(MainGUI.class.getResource("MainGUI.fxml"), ResourceBundle.getBundle("Etiquetas", Locale.getDefault()));
         loader.setControllerFactory(controllerClass -> {
             try{
