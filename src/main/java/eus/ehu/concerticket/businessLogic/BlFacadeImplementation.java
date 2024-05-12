@@ -9,12 +9,10 @@ import eus.ehu.concerticket.exceptions.ConcertMustBeLaterThanTodayException;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.util.Callback;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 
 /**
  * Implements the business logic as a web service.
@@ -49,10 +47,15 @@ public class BlFacadeImplementation implements BlFacade {
         return dbManager.getDatesConcert(concert, place, tickets);
     }
 
+    public List<Purchase> getPurchases(Client client) {
+        return dbManager.getPurchases(client);
+    }
+
     @Override
     public boolean exists(String username, String email) {
         return dbManager.exists(username, email);
     }
+
     public boolean createStaff(String username, String email, String password) {
         return dbManager.createStaff( username, email, password);
     }

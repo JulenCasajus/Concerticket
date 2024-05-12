@@ -35,7 +35,7 @@ public class DataAccess {
   protected EntityManagerFactory emf;
 
   public DataAccess() {
-    this.open(false);
+    this.open(true);
   }
 
   public void open(boolean initializeMode) {
@@ -102,6 +102,12 @@ public class DataAccess {
   public void close() {
     db.close();
     System.out.println("DataBase is closed");
+  }
+
+  public List<Purchase> getPurchases(Client client) {
+      TypedQuery<Purchase> query = db.createQuery("SELECT p FROM Purchase p WHERE p.client = :client", Purchase.class);
+      query.setParameter("client", client);
+      return query.getResultList();
   }
 
   public boolean exists(String username, String email) {

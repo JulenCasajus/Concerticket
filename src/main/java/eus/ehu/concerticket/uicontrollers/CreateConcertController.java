@@ -64,16 +64,6 @@ public class CreateConcertController implements Controller {
         this.controller = mainGUIController;
     }
 
-    @Override
-    public void setNull() {
-
-    }
-
-    @Override
-    public void bookVisible(boolean b) {
-
-    }
-
     @FXML
     void initialize() {
 /*
@@ -241,10 +231,8 @@ public class CreateConcertController implements Controller {
                     float price = Float.parseFloat(txtPrice.getText());
                     if (price <= 0)
                         return ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.PriceMustBeGreaterThan0");
-
                     else
                         return null;
-
                 }
             }
         } catch (NumberFormatException e1) {
@@ -261,6 +249,14 @@ public class CreateConcertController implements Controller {
         lblErrorMessage.setText(message);
     }
 
-    public void CreateConcertClick(ActionEvent actionEvent) {
+    public void createConcertClick(ActionEvent actionEvent) {
+    }
+
+    @Override
+    public void setNull() {
+    }
+
+    @Override
+    public void bookVisible(boolean b) {
     }
 }

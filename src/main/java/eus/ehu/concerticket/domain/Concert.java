@@ -81,19 +81,16 @@ public class Concert implements Serializable {
         this.discount = discount;
     }
 
-    public String dateWithoutHour(Date date) {
+    public String getDateWithoutHours(Date date) {
         String[] dateParts = date.toString().split(" ");
         return dateParts[0];
     }
 
     public String toString() {
-        return  group + " | " + place + " | " + dateWithoutHour(date);
-    }
-    public String toString2() {
-        return  group + " | " + place;
+        return  group + " | " + place + " | " + getDateWithoutHours(date);
     }
 
-    public Staff getStaff() {
-        return null;
+    public String toString2() {
+        return  group + " | " + place;
     }
 }

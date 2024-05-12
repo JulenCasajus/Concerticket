@@ -40,4 +40,17 @@ public class Purchase {
     public void setPrice(float price) {
         this.price = price;
     }
+
+    public Concert getConcert() {
+        return concert;
+    }
+
+    @Override
+    public String toString() {
+        return "Purchase{" + "purchaseID=" + purchaseID + ", tickets=" + tickets + ", price=" + price + ", client=" + client + ", concert=" + concert + '}';
+    }
+
+    public String toString2() {
+        return concert + " | " + tickets + " tickets | " + price + "€";
+    }
 }

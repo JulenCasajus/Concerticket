@@ -46,20 +46,20 @@ public class LogInController implements Controller {
         });
         logInButton.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                LogInBtnClick(new ActionEvent());
+                logInBtnClick(new ActionEvent());
                 event.consume(); // Evitar que la tecla Enter realice otra acción
             }
         });
         signUpBtn.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                SignUpBtnClick(new ActionEvent());
+                signUpBtnClick(new ActionEvent());
                 event.consume(); // Evitar que la tecla Enter realice otra acción
             }
         });
     }
 
     @FXML
-    void LogInBtnClick(ActionEvent event) { //LOG IN
+    void logInBtnClick(ActionEvent event) { //LOG IN
         String user = userField.getText();
         String password = passwordField.getText();
         if (businessLogic.isClient(user,password)) {
@@ -87,7 +87,7 @@ public class LogInController implements Controller {
         controller.setVisible(true);
     }
     @FXML
-    void SignUpBtnClick(ActionEvent event) {
+    void signUpBtnClick(ActionEvent event) {
         System.out.println("SignUp");
         controller.showScene("SignUp");
     }

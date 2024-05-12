@@ -18,7 +18,7 @@
    </Label>
    <TextField fx:id="userField" layoutX="315.0" layoutY="150.0" prefHeight="32.0" prefWidth="250.0" promptText="%UsernameOrEmailAddress"/>
    <PasswordField fx:id="passwordField" layoutX="315.0" layoutY="200.0" prefHeight="32.0" prefWidth="250.0" promptText="%Password"/>
-   <Button layoutX="315.0" layoutY="250.0" mnemonicParsing="false" onAction="#LogInBtnClick" prefHeight="32.0" prefWidth="250.0" text="%LogIn" textAlignment="CENTER">
+   <Button layoutX="315.0" layoutY="250.0" mnemonicParsing="false" onAction="#logInBtnClick" prefHeight="32.0" prefWidth="250.0" text="%LogIn" textAlignment="CENTER">
       <cursor>
          <Cursor fx:constant="HAND"/>
       </cursor>
@@ -29,7 +29,7 @@
       </font>
    </Label>
    <Label layoutX="340.0" layoutY="300.0" prefHeight="32.0" text="Don't have an account?" textAlignment="CENTER"/>
-   <Button fx:id="logInButton" blendMode="HARD_LIGHT" layoutX="478.5" layoutY="300.0" mnemonicParsing="false" onAction="#SignUpBtnClick" prefHeight="32.0" text="%SignUp" textFill="#0042ff">
+   <Button fx:id="logInButton" blendMode="HARD_LIGHT" layoutX="478.5" layoutY="300.0" mnemonicParsing="false" onAction="#signUpBtnClick" prefHeight="32.0" text="%SignUp" textFill="#0042ff">
       <opaqueInsets>
          <Insets/>
       </opaqueInsets>

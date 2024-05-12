@@ -18,21 +18,14 @@ import java.util.List;
 
 public class QueryPurchaseController implements Controller{
 
-
-    @FXML
-    private Button removeAlertBtn;
-
     @FXML
     private TableColumn<Purchase, String> q1;
-
     @FXML
     private TableColumn<Purchase, String> q2;
-
     @FXML
     private TableColumn<Purchase, Integer> q3;
-
     @FXML
-    private TableView<Purchase> tableAlerts;
+    private TableView<Purchase> tablePurchases;
     private MainGUI mainGUI;
     private BlFacade businessLogic;
     private MainGUIController controller;
@@ -41,52 +34,37 @@ public class QueryPurchaseController implements Controller{
          businessLogic = bl;
          this.controller = new MainGUIController(businessLogic);
     }
+
     public void setMainGUIController(MainGUIController mainGUIController) {
         this.controller = mainGUIController;
-    }
-    @FXML
-    void removeAlert(ActionEvent event) {
-        ObservableList<Purchase> selectedItems = tableAlerts.getSelectionModel().getSelectedItems();
-        for (Purchase alert : selectedItems) {
-            //businessLogic.removeAlert(alert);
-        }
-        tableAlerts.getItems().removeAll(selectedItems);
-        removeAlertBtn.setDisable(true);
-        tableAlerts.getSelectionModel().clearSelection();
     }
 
     @FXML
     void initialize() {
-        /*Traveler traveler = businessLogic.getCurrentTraveler();
-        List<Purchase> alerts = businessLogic.getAlerts(traveler);
-        tableAlerts.getItems().addAll(alerts);
+        Client client = businessLogic.getCurrentClient();
+        List<Purchase> purchases = businessLogic.getPurchases(client);
+        tablePurchases.getItems().addAll(purchases);
+
         q1.setCellValueFactory(data -> {
             Purchase purchase = data.getValue();
             return new SimpleStringProperty(purchase != null ? purchase.toString2() : "<no name>");
         });
         q2.setCellValueFactory(data -> {
             Purchase purchase = data.getValue();
-            return new SimpleStringProperty(purchase != null ? purchase.getDateWithoutHours() : "<no date>");
+            return new SimpleStringProperty(purchase != null ? purchase.getConcert().getDateWithoutHours(purchase.getConcert().getDate()) : "<no date>");
         });
         q3.setCellValueFactory(data -> {
             Purchase purchase = data.getValue();
-            return new SimpleIntegerProperty(purchase != null ? purchase.getNumPlaces() : 0).asObject();
+            return new SimpleIntegerProperty(purchase != null ? purchase.getTickets() : 0).asObject();
         });
-
-        tableAlerts.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            removeAlertBtn.setDisable(newSelection == null || businessLogic.getCurrentTraveler() == null);
-        });*/
     }
 
     @Override
     public void setNull() {
-
     }
 
     @Override
     public void bookVisible(boolean b) {
-
     }
-
 }
 

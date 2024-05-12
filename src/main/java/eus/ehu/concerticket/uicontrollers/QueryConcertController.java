@@ -60,7 +60,6 @@ public class QueryConcertController implements Controller {
         this.controller = controller;
     }
 
-
     @FXML
     public void initialize() {
         /*

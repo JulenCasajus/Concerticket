@@ -19,11 +19,11 @@
          </font>
       </Label>
       <RadioButton fx:id="staff" layoutX="347.5" layoutY="75.0" mnemonicParsing="false" onAction="#applyClick" prefHeight="32.0" prefWidth="100.0" selected="true" text="%Staff" />
-        <TextField fx:id="UsrFieldSingUp" layoutX="315.0" layoutY="125.0" prefHeight="32.0" prefWidth="250.0" promptText="%Username" />
+        <TextField fx:id="userFieldSingUp" layoutX="315.0" layoutY="125.0" prefHeight="32.0" prefWidth="250.0" promptText="%Username" />
       <TextField fx:id="emailField" layoutX="315.0" layoutY="175.0" prefHeight="32.0" prefWidth="250.0" promptText="%EmailAddress" />
-        <PasswordField fx:id="PasswordFieldSingUp" layoutX="315.0" layoutY="225.0" prefHeight="32.0" prefWidth="250.0" promptText="%Password" />
-      <PasswordField fx:id="PasswordFieldSingUp2" layoutX="315.0" layoutY="275.0" prefHeight="32.0" prefWidth="250.0" promptText="%RepeatThePassword" />
-        <Button fx:id="registerButton" layoutX="315.0" layoutY="325.0" mnemonicParsing="false" onAction="#SignUpBtnClick" prefHeight="32.0" prefWidth="250.0" text="%SignUp">
+        <PasswordField fx:id="passwordFieldSingUp" layoutX="315.0" layoutY="225.0" prefHeight="32.0" prefWidth="250.0" promptText="%Password" />
+      <PasswordField fx:id="passwordFieldSingUp2" layoutX="315.0" layoutY="275.0" prefHeight="32.0" prefWidth="250.0" promptText="%RepeatThePassword" />
+        <Button fx:id="registerButton" layoutX="315.0" layoutY="325.0" mnemonicParsing="false" onAction="#signUpBtnClick" prefHeight="32.0" prefWidth="250.0" text="%SignUp">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
@@ -36,6 +36,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label fx:id="Successful" alignment="CENTER" layoutX="315.0" layoutY="425.0" prefHeight="32.0" prefWidth="250.0" />
+      <Label fx:id="successful" alignment="CENTER" layoutX="315.0" layoutY="425.0" prefHeight="32.0" prefWidth="250.0" />
     </children>
 </AnchorPane>

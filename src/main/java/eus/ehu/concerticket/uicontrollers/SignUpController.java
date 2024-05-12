@@ -10,13 +10,13 @@ import javafx.scene.input.KeyCode;
 public class SignUpController implements Controller {
 
     @FXML
-    private PasswordField PasswordFieldSingUp;
+    private PasswordField passwordFieldSingUp;
     @FXML
-    private PasswordField PasswordFieldSingUp2;
+    private PasswordField passwordFieldSingUp2;
     @FXML
-    private Label Successful;
+    private Label successful;
     @FXML
-    private TextField UsrFieldSingUp;
+    private TextField userFieldSingUp;
     private MainGUI mainGUI;
     private MainGUIController controller;
     private BlFacade businessLogic;
@@ -24,8 +24,6 @@ public class SignUpController implements Controller {
     public RadioButton staff;
     @FXML
     private TextField emailField;
-    @FXML
-    private ToggleGroup TravelerOrDriver;
     @FXML
     private Button registerButton;
 
@@ -39,69 +37,57 @@ public class SignUpController implements Controller {
         this.controller = controller;
     }
 
-    @Override
-    public void setNull() {
-
-    }
-
-    @Override
-    public void bookVisible(boolean b) {
-
-    }
-
     public void initialize() {
         registerButton.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                SignUpBtnClick();
+                signUpBtnClick();
             }
         });
     }
 
     @FXML
-    void LoginBtnClick(ActionEvent event) {
-        System.out.println("Login");
-        controller.showScene("Login");
+    public void logInBtnClick(ActionEvent event) {
+        System.out.println("LogIn");
+        controller.showScene("LogIn");
     }
 
     @FXML
-    void SignUpBtnClick() {
+    void signUpBtnClick() {
 
-        String username = UsrFieldSingUp.getText();
-        String password = PasswordFieldSingUp.getText();
-        String password2 = PasswordFieldSingUp2.getText();
+        String username = userFieldSingUp.getText();
+        String password = passwordFieldSingUp.getText();
+        String password2 = passwordFieldSingUp2.getText();
         String email = emailField.getText();
 
-        RadioButton selectedToggle = (RadioButton) TravelerOrDriver.getSelectedToggle();
-        String mode = selectedToggle.getText();
-
-        /*
+        //RadioButton selectedToggle = (RadioButton) getSelectedToggle();
+        //String mode = selectedToggle.getText();
 
         if(businessLogic.checkCredentials(username, email)) { //Username's and email's format correct
             if(businessLogic.checkPasswords(password, password2)) { //Password and password2 match
                 if(!businessLogic.exists(username, email)) { //Account does not exist already
-                    if (mode.equals("Driver")) {
-                        if (!businessLogic.createDriver(email, username, password)) {
-                            Successful.setText("Driver creation failed");
+                    /*if (mode.equals("Staff")) {
+                        if (!businessLogic.createStaff(email, username, password)) {
+                            successful.setText("Staff creation failed");
                         }
-                        System.out.println("Driver created successfully");
-                    } else {
-                        if (!businessLogic.createTraveler(email, username, password)) {
-                            Successful.setText("Traveler creation failed");
+                        System.out.println("Staff created successfully");
+                    } else {*/
+                        if (!businessLogic.createClient(email, username, password)) {
+                            successful.setText("Client creation failed");
                         }
-                        System.out.println("Traveler created successfully");
-                    }
+                        System.out.println("Client created successfully");
+                    //}
                     this.SetAllEmpty();
-                    Successful.setText("");
+                    successful.setText("");
                     controller.showScene("Login");
                 } else { //Account exists already
-                    Successful.setText("Error: User already exists");
+                    successful.setText("Error: User already exists");
                 }
             } else { //Password and password2 do not match
-                Successful.setText("Error: Passwords do not match or are empty");
+                successful.setText("Error: Passwords do not match or are empty");
             }
         } else { //Username's and email's format incorrect
-            Successful.setText("Error: Username or email not valid");
-        }*/
+            successful.setText("Error: Username or email not valid");
+        }
     }
 
     @FXML
@@ -110,13 +96,17 @@ public class SignUpController implements Controller {
 
     @FXML
     public void SetAllEmpty() {
-        UsrFieldSingUp.setText("");
-        //UsrFieldSingUp.setPromptText("");
-        PasswordFieldSingUp.setText("");
-        PasswordFieldSingUp2.setText("");
+        userFieldSingUp.setText("");
+        passwordFieldSingUp.setText("");
+        passwordFieldSingUp2.setText("");
         emailField.setText("");
     }
 
-    public void logInBtnClick(ActionEvent actionEvent) {
+    @Override
+    public void setNull() {
+    }
+
+    @Override
+    public void bookVisible(boolean b) {
     }
 }

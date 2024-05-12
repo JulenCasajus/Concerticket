@@ -15,11 +15,13 @@ import java.util.List;
  */
 public interface BlFacade  {
 
-    public void setUserNull();
+    void setUserNull();
 
-    public List<Place> getPlaces();
+    List<Place> getPlaces();
 
     List<Date> getDatesConcert(Concert concert, Place Place, Integer tickets);
+
+    List<Purchase> getPurchases(Client client);
 
     boolean exists(String username, String email);
 
@@ -43,9 +45,9 @@ public interface BlFacade  {
 
     boolean checkPasswords(String password, String password2);
 
-    public Concert createConcert(Date date, float price, Integer maxTickets, float discount, String place) throws ConcertMustBeLaterThanTodayException, ConcertAlreadyExistException;
+    Concert createConcert(Date date, float price, Integer maxTickets, float discount, String place) throws ConcertMustBeLaterThanTodayException, ConcertAlreadyExistException;
 
-    public List<Concert> getConcerts(Group group, Place place, Date date);
+    List<Concert> getConcerts(Group group, Place place, Date date);
 
     void setConcert(Concert concert);
 

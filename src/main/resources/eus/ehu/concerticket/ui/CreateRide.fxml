@@ -20,7 +20,7 @@
       <DatePicker fx:id="datePicker" editable="false" layoutX="315.0" layoutY="200.0" prefHeight="32.0" prefWidth="250.0" promptText="%CreateRideGUI.Date" />
       <TextField fx:id="txtNumberOfSeats" layoutX="315.0" layoutY="250.0" prefHeight="32.0" prefWidth="100.0" promptText="%CreateRideGUI.Seats" />
       <TextField fx:id="txtPrice" layoutX="465.0" layoutY="250.0" prefHeight="32.0" prefWidth="100.0" promptText="%CreateRideGUI.Price" />
-      <Button fx:id="btnCreateRide" layoutX="315.0" layoutY="300.0" mnemonicParsing="false" onAction="#CreateConcertClick" prefHeight="32.0" prefWidth="250.0" text="%CreateRide" textAlignment="CENTER" />
+      <Button fx:id="btnCreateRide" layoutX="315.0" layoutY="300.0" mnemonicParsing="false" onAction="#createConcertClick" prefHeight="32.0" prefWidth="250.0" text="%CreateRide" textAlignment="CENTER" />
       <Label fx:id="lblErrorMessage" alignment="CENTER" layoutX="315.0" layoutY="350.0" prefHeight="32.0" prefWidth="250.0" />
       <Label fx:id="lblErrorMinBet" alignment="CENTER" layoutX="315.0" layoutY="350.0" prefHeight="32.0" prefWidth="250.0" />
       <ComboBox fx:id="comboCreateDepartCity" editable="true" layoutX="315.0" layoutY="100.0" prefHeight="32.0" prefWidth="250.0" promptText="%DepartureCity" />
