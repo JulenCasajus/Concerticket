@@ -14,28 +14,19 @@
     <left>
         <AnchorPane prefHeight="500.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
             <children>
-                <Label fx:id="selectOptionLbl" layoutX="25.0" prefHeight="32.0" prefWidth="175.0" text="%SelectUseCase" textAlignment="CENTER">
+                <Label layoutX="25.0" prefHeight="32.0" prefWidth="175.0" text="%SelectUseCase" textAlignment="CENTER">
                     <font>
                         <Font size="22.0" />
                     </font></Label>
-                <Button fx:id="createRideBtn" disable="true" layoutX="25.0" layoutY="100.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="%MainGUI.CreateRide">
+                <Button fx:id="createConcertBtn" disable="true" layoutX="25.0" layoutY="100.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="%MainGUI.CreateRide">
                     <font>
                         <Font size="16.0" />
                     </font></Button>
-                <Button fx:id="queryRidesBtn" layoutX="25.0" layoutY="50.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="%MainGUI.QueryRide">
+                <Button fx:id="queryConcertBtn" layoutX="25.0" layoutY="50.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="%MainGUI.QueryRide">
                     <font>
                         <Font size="16.0" />
                     </font></Button>
-                <Button fx:id="createAlertBtn" disable="true" layoutX="25.0" layoutY="150.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="%MainGUI.CreateAlert">
-                    <font>
-                        <Font size="16.0" />
-                    </font></Button>
-                <Button fx:id="acceptRideBtn" disable="true" layoutX="25.0" layoutY="200.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="%MainGUI.AcceptRide">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                </Button>
-                <Button fx:id="queryAlertsBtn" disable="true" layoutX="25.0" layoutY="248.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="%MainGUI.QueryAlerts">
+                <Button fx:id="queryPurchaseBtn" disable="true" layoutX="25.0" layoutY="248.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="%MainGUI.QueryAlerts">
                     <font>
                         <Font size="16.0" />
                     </font>
@@ -50,7 +41,7 @@
                     <font>
                         <Font size="24.0" />
                     </font></Label>
-                <Button fx:id="LogInButton" layoutX="1050.0" layoutY="60.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="200.0" text="%LogIn" textAlignment="CENTER">
+                <Button fx:id="logInButton" layoutX="1050.0" layoutY="60.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="200.0" text="%LogIn" textAlignment="CENTER">
                     <font>
                         <Font size="24.0" />
                     </font>
@@ -58,7 +49,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="RegisterButton" layoutX="1050.0" layoutY="125.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="200.0" text="%SignUp" textAlignment="CENTER">
+                <Button fx:id="signUpButton" layoutX="1050.0" layoutY="125.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="200.0" text="%SignUp" textAlignment="CENTER">
                     <font>
                         <Font size="24.0" />
                     </font>
@@ -71,7 +62,7 @@
                         <Font name="System Bold" size="59.0" />
                     </font>
                 </Label>
-                <Button fx:id="LogOutButton" layoutX="1050.0" layoutY="125.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="200.0" text="%LogOut" textAlignment="CENTER" visible="false">
+                <Button fx:id="logOutButton" layoutX="1050.0" layoutY="125.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="200.0" text="%LogOut" textAlignment="CENTER" visible="false">
                     <font>
                         <Font size="24.0" />
                     </font>

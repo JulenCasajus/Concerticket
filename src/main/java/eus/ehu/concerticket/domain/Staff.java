@@ -1,10 +1,12 @@
 package eus.ehu.concerticket.domain;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 import java.util.Objects;
 
 @Entity
+@DiscriminatorValue("STAFF")
 public class Staff extends User {
 
     public Staff() {

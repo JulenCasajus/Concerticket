@@ -17,6 +17,16 @@ import java.util.ResourceBundle;
 import java.util.Vector;
 
 
+
+
+
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
 /**
  * Implements the Data Access utility to the objectDb database
  */
@@ -25,11 +35,7 @@ public class DataAccess {
   protected EntityManagerFactory emf;
 
   public DataAccess() {
-    this.open();
-  }
-
-  public void open() {
-    open(false);
+    this.open(false);
   }
 
   public void open(boolean initializeMode) {
@@ -47,15 +53,13 @@ public class DataAccess {
     }
 
     if (config.isDataAccessLocal()) {
-      final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-              .configure() // configures settings from hibernate.cfg.xml
-              .build();
+      final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
       try {
         emf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
       } catch (Exception e) {
         StandardServiceRegistryBuilder.destroy(registry);
+        e.printStackTrace();
       }
-
       db = emf.createEntityManager();
       System.out.println("DataBase opened");
     }
@@ -63,13 +67,11 @@ public class DataAccess {
 
   public void reset() {
     db.getTransaction().begin();
-/*
     db.createQuery("DELETE FROM Concert").executeUpdate();
     db.createQuery("DELETE FROM Group").executeUpdate();
     db.createQuery("DELETE FROM Place").executeUpdate();
     db.createQuery("DELETE FROM User").executeUpdate();
     db.createQuery("DELETE FROM Purchase").executeUpdate();
-*/
     db.getTransaction().commit();
   }
 
@@ -83,7 +85,7 @@ public class DataAccess {
 
       generateTestingData();
 
-      Client client = new Client("julen", "julen@", "julen");
+      Client client = new Client("a", "a@", "a");
       db.persist(client);
 
       db.getTransaction().commit();

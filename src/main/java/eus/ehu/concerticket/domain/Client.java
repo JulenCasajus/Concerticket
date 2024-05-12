@@ -1,18 +1,16 @@
 package eus.ehu.concerticket.domain;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
 @Entity
+@DiscriminatorValue("CLIENT")
 public class Client extends User {
 
-    @OneToMany(fetch= FetchType.EAGER, cascade= CascadeType.PERSIST)
+    @OneToMany(mappedBy = "Client", fetch = FetchType.EAGER, cascade= CascadeType.ALL)
     private List<Purchase> purchases = new Vector<>();
 
     public Client() {
@@ -58,6 +56,7 @@ public class Client extends User {
         return "Client [Username=" + super.getUsername() + ", Email=" + super.getEmail() + "]";
     }
 
+    @Override
     public String toString2() {
         return super.toString2();
     }

@@ -10,9 +10,9 @@ import javafx.scene.input.KeyCode;
 public class SignUpController implements Controller {
 
     @FXML
-    private PasswordField PsswdFieldSingUp;
+    private PasswordField PasswordFieldSingUp;
     @FXML
-    private PasswordField PsswdFieldSingUp2;
+    private PasswordField PasswordFieldSingUp2;
     @FXML
     private Label Successful;
     @FXML
@@ -20,6 +20,8 @@ public class SignUpController implements Controller {
     private MainGUI mainGUI;
     private MainGUIController controller;
     private BlFacade businessLogic;
+    @FXML
+    public RadioButton staff;
     @FXML
     private TextField emailField;
     @FXML
@@ -65,8 +67,8 @@ public class SignUpController implements Controller {
     void SignUpBtnClick() {
 
         String username = UsrFieldSingUp.getText();
-        String password = PsswdFieldSingUp.getText();
-        String password2 = PsswdFieldSingUp2.getText();
+        String password = PasswordFieldSingUp.getText();
+        String password2 = PasswordFieldSingUp2.getText();
         String email = emailField.getText();
 
         RadioButton selectedToggle = (RadioButton) TravelerOrDriver.getSelectedToggle();
@@ -110,8 +112,11 @@ public class SignUpController implements Controller {
     public void SetAllEmpty() {
         UsrFieldSingUp.setText("");
         //UsrFieldSingUp.setPromptText("");
-        PsswdFieldSingUp.setText("");
-        PsswdFieldSingUp2.setText("");
+        PasswordFieldSingUp.setText("");
+        PasswordFieldSingUp2.setText("");
         emailField.setText("");
+    }
+
+    public void logInBtnClick(ActionEvent actionEvent) {
     }
 }

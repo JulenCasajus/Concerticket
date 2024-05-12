@@ -25,11 +25,11 @@ public class MainGUIController implements Controller {
     @FXML
     private Button queryPurchaseBtn;
     @FXML
-    private Button LogInButton;
+    private Button logInButton;
     @FXML
-    private Button SignUpButton;
+    private Button signUpButton;
     @FXML
-    private Button LogOutButton;
+    private Button logOutButton;
     @FXML
     private Button createConcertBtn;
     @FXML
@@ -55,9 +55,9 @@ public class MainGUIController implements Controller {
 
     @FXML
     public void hideLogInButton() {
-        LogInButton.setVisible(false);
-        SignUpButton.setVisible(false);
-        LogOutButton.setVisible(true);
+        logInButton.setVisible(false);
+        signUpButton.setVisible(false);
+        logOutButton.setVisible(true);
     }
 
     @FXML
@@ -105,19 +105,19 @@ public class MainGUIController implements Controller {
                 createConcert(new ActionEvent());
             }
         });
-        LogInButton.setOnKeyPressed(event -> {
+        logInButton.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 logInClick(new ActionEvent());
             }
         });
-        SignUpButton.setOnKeyPressed(event -> {
+        signUpButton.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 signUpClick(new ActionEvent());
             }
         });
-        LogOutButton.setOnKeyPressed(event -> {
+        logOutButton.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                LogOutClick(new ActionEvent());
+                logOutClick(new ActionEvent());
             }
         });
         queryPurchaseBtn.setOnKeyPressed(event -> {
@@ -185,10 +185,10 @@ public class MainGUIController implements Controller {
     }
 
     @FXML
-    void LogOutClick(ActionEvent event) {
-        LogInButton.setVisible(true);
-        SignUpButton.setVisible(true);
-        LogOutButton.setVisible(false);
+    void logOutClick(ActionEvent event) {
+        logInButton.setVisible(true);
+        signUpButton.setVisible(true);
+        logOutButton.setVisible(false);
         lblUser.setText("");
         image.setVisible(false);
         businessLogic.setUserNull();

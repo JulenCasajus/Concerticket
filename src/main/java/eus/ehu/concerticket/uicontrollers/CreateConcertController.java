@@ -9,6 +9,7 @@ import eus.ehu.concerticket.ui.MainGUI;
 import eus.ehu.concerticket.utils.Dates;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.Callback;
@@ -258,5 +259,8 @@ public class CreateConcertController implements Controller {
         lblErrorMessage.getStyleClass().clear();
         lblErrorMessage.getStyleClass().setAll("lbl", "lbl-"+label);
         lblErrorMessage.setText(message);
+    }
+
+    public void CreateConcertClick(ActionEvent actionEvent) {
     }
 }
