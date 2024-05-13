@@ -1,8 +1,6 @@
 package eus.ehu.concerticket.uicontrollers;
 
 import eus.ehu.concerticket.businessLogic.BlFacade;
-import eus.ehu.concerticket.ui.MainGUI;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -17,7 +15,6 @@ public class SignUpController implements Controller {
     private Label successful;
     @FXML
     private TextField userFieldSingUp;
-    private MainGUI mainGUI;
     private MainGUIController controller;
     private BlFacade businessLogic;
     @FXML
@@ -27,7 +24,6 @@ public class SignUpController implements Controller {
     @FXML
     private Button registerButton;
 
-    //constructor
     public SignUpController(BlFacade bl) {
         businessLogic = bl;
         this.controller = new MainGUIController(businessLogic);
@@ -46,7 +42,7 @@ public class SignUpController implements Controller {
     }
 
     @FXML
-    public void logInBtnClick(ActionEvent event) {
+    public void logInBtnClick() {
         System.out.println("LogIn");
         controller.showScene("LogIn");
     }
@@ -59,8 +55,10 @@ public class SignUpController implements Controller {
         String password2 = passwordFieldSingUp2.getText();
         String email = emailField.getText();
 
-        //RadioButton selectedToggle = (RadioButton) getSelectedToggle();
-        //String mode = selectedToggle.getText();
+        /*
+            RadioButton selectedToggle = (RadioButton) getSelectedToggle();
+            String mode = selectedToggle.getText();
+        */
 
         if(businessLogic.checkCredentials(username, email)) { //Username's and email's format correct
             if(businessLogic.checkPasswords(password, password2)) { //Password and password2 match
@@ -91,7 +89,7 @@ public class SignUpController implements Controller {
     }
 
     @FXML
-    void applyClick(ActionEvent event) {
+    void applyClick() {
     }
 
     @FXML

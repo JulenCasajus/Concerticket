@@ -10,22 +10,10 @@ import jakarta.persistence.TypedQuery;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Vector;
-
-
-
-
-
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 /**
  * Implements the Data Access utility to the objectDb database
@@ -68,7 +56,7 @@ public class DataAccess {
   public void reset() {
     db.getTransaction().begin();
     db.createQuery("DELETE FROM Concert").executeUpdate();
-    db.createQuery("DELETE FROM Group").executeUpdate();
+    db.createQuery("DELETE FROM Band").executeUpdate();
     db.createQuery("DELETE FROM Place").executeUpdate();
     db.createQuery("DELETE FROM User").executeUpdate();
     db.createQuery("DELETE FROM Purchase").executeUpdate();
@@ -158,12 +146,12 @@ public class DataAccess {
     }
   }
 
-  public List<Concert> getConcerts(Group group, Place place, Date date) {
+  public List<Concert> getConcerts(Band band, Place place, Date date) {
     System.out.println(">> DataAccess: getConcerts group/place/date");
 
     TypedQuery<Concert> query = db.createQuery("SELECT c FROM Concert c "
             + "WHERE c.group=?1 and c.place=?2 and c.date=?3 ", Concert.class);
-    query.setParameter(1, group.getName());
+    query.setParameter(1, band.getName());
     query.setParameter(2, place.getName());
     query.setParameter(3, date);
 
@@ -278,12 +266,12 @@ public class DataAccess {
   /**
    * This method returns all the places with concerts, from all rides that depart from a given city
    *
-   * @param group the musical group
+   * @param band the musical group
    * @return collection of places
    */
-  public List<Place> getPlaces(Group group) {
+  public List<Place> getPlaces(Band band) {
     TypedQuery<Place> query = db.createQuery("SELECT DISTINCT c.place FROM Concert c WHERE c.group=?1 ORDER BY c.place", Place.class);
-    query.setParameter(1, group);
+    query.setParameter(1, band);
     return query.getResultList();
   }
 

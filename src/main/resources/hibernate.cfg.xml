@@ -9,12 +9,10 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">create</property>
         <property name="hibernate.physical_naming_strategy">org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl</property>
-        <mapping class="eus.ehu.concerticket.domain.Group" />
+        <mapping class="eus.ehu.concerticket.domain.Band" />
         <mapping class="eus.ehu.concerticket.domain.User" />
-        <mapping class="eus.ehu.concerticket.domain.Client" />
         <mapping class="eus.ehu.concerticket.domain.Concert" />
         <mapping class="eus.ehu.concerticket.domain.Place" />
         <mapping class="eus.ehu.concerticket.domain.Purchase" />
-        <mapping class="eus.ehu.concerticket.domain.Staff" />
     </session-factory>
 </hibernate-configuration>

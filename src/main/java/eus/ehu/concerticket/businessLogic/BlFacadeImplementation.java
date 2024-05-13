@@ -102,8 +102,8 @@ public class BlFacadeImplementation implements BlFacade {
         return dbManager.createConcert(date, price, maxTickets, discount, place);
     }
 
-    public List<Concert> getConcerts(Group group, Place place, Date date) {
-        return dbManager.getConcerts(group, place, date);
+    public List<Concert> getConcerts(Band band, Place place, Date date) {
+        return dbManager.getConcerts(band, place, date);
     }
 
     public void setConcert(Concert concert) {

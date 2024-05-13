@@ -47,7 +47,7 @@ public interface BlFacade  {
 
     Concert createConcert(Date date, float price, Integer maxTickets, float discount, String place) throws ConcertMustBeLaterThanTodayException, ConcertAlreadyExistException;
 
-    List<Concert> getConcerts(Group group, Place place, Date date);
+    List<Concert> getConcerts(Band band, Place place, Date date);
 
     void setConcert(Concert concert);
 

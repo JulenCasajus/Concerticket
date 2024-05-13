@@ -2,10 +2,11 @@ package eus.ehu.concerticket.domain;
 
 import jakarta.persistence.*;
 
+
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Table(name = "USER")
-@DiscriminatorColumn(name = "USER_TYPE", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING)
+@Table(name = "\"User\"")
 public class User {
 
     @Id

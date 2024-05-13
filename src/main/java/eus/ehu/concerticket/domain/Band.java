@@ -5,17 +5,17 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class Group {
+public class Band {
 
     @Id
     private String name;
     private Integer creationYear;
     private String leader;
 
-    public Group() {
+    public Band() {
     }
 
-    public Group(String name, Integer creationYear, String leader) {
+    public Band(String name, Integer creationYear, String leader) {
         this.name = name;
         this.creationYear = creationYear;
         this.leader = leader;

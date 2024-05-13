@@ -3,13 +3,9 @@ package eus.ehu.concerticket.uicontrollers;
 import eus.ehu.concerticket.businessLogic.BlFacade;
 import eus.ehu.concerticket.domain.Purchase;
 import eus.ehu.concerticket.domain.Client;
-import eus.ehu.concerticket.ui.MainGUI;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -26,7 +22,6 @@ public class QueryPurchaseController implements Controller{
     private TableColumn<Purchase, Integer> q3;
     @FXML
     private TableView<Purchase> tablePurchases;
-    private MainGUI mainGUI;
     private BlFacade businessLogic;
     private MainGUIController controller;
 
