@@ -26,27 +26,13 @@ public class DataAccess {
     this.open();
   }
 
-  public DataAccess(boolean initializeMode) {
-    this.open(initializeMode);
-  }
-
   public void open() {
-    open(false);
-  }
-
-  public void open(boolean initializeMode) {
 
     Config config = Config.getInstance();
 
     System.out.println("Opening DataAccess instance => isDatabaseLocal: " +
             config.isDataAccessLocal() + " getDataBaseOpenMode: " + config.getDataBaseOpenMode());
 
-    String fileName = config.getDatabaseName();
-
-    if (initializeMode) {
-      fileName = fileName + ";drop";
-      System.out.println("Deleting the DataBase");
-    }
 
     if (config.isDataAccessLocal()) {
       final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
@@ -81,11 +67,7 @@ public class DataAccess {
 
       generateTestingData();
 
-      Client client = new Client("a", "a@", "a");
-      Staff staff = new Staff("b", "b@", "b");
 
-      db.persist(client);
-      db.persist(staff);
 
       db.getTransaction().commit();
       System.out.println("The database has been initialized");
@@ -98,14 +80,9 @@ public class DataAccess {
     // create domain entities and persist them
   }
 
-  public void close() {
-    db.close();
-    System.out.println("DataBase is closed");
-  }
-
   public List<Purchase> getPurchases(Client client) {
-      TypedQuery<Purchase> query = db.createQuery("SELECT p FROM Purchase p WHERE p.client = :client", Purchase.class);
-      query.setParameter("client", client);
+      TypedQuery<Purchase> query = db.createQuery("SELECT p FROM Purchase p WHERE p.user = :client", Purchase.class);
+      query.setParameter("client", client.getEmail());
       return query.getResultList();
   }
 
@@ -118,22 +95,15 @@ public class DataAccess {
   }
 
   public boolean checkCredentials(String username, String email) {
-    return !username.contains("@") && email.contains("@") && !username.isEmpty() && !email.isEmpty();
+    return !username.contains("@") && email.contains("@") && !username.isEmpty();
   }
 
   public boolean checkPasswords(String password, String password2) {
     return password.equals(password2) && !password.isEmpty();
   }
 
-  private String formatName(String name) {
-    if (name == null || name.isEmpty()) {
-      return name;
-    }
-    return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
-  }
-
-  public Concert createConcert(Date date, float price, Integer maxtickets, float discount, String place) throws ConcertMustBeLaterThanTodayException, ConcertAlreadyExistException {
-    System.out.println(">> DataAccess: createConcert => date=" + date + ", price" + price + ", discount=" + discount + ", place=" + place.toString());
+  public void createConcert(String band, String place, Date date, float price, float discount) throws ConcertMustBeLaterThanTodayException, ConcertAlreadyExistException {
+    System.out.println(">> DataAccess: createConcert => band=" + band + ", place=" + place + ", date=" + date + ", price" + price + ", discount=" + discount);
     try {
       if (new Date().compareTo(date) > 0) {
         throw new ConcertMustBeLaterThanTodayException(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorConcertMustBeLaterThanToday"));
@@ -150,21 +120,20 @@ public class DataAccess {
       db.persist(staff);
       db.getTransaction().commit();
 
-      return concert;
     } catch (NullPointerException e) {
       db.getTransaction().commit();
-      return null;
     }
   }
 
-  public List<Concert> getConcerts(Band band, Place place, Date date) {
+  public List<Concert> getConcerts(String band, String place, Date date, Integer tickets) {
     System.out.println(">> DataAccess: getConcerts group/place/date");
 
     TypedQuery<Concert> query = db.createQuery("SELECT c FROM Concert c "
-            + "WHERE c.group=?1 and c.place=?2 and c.date=?3 ", Concert.class);
-    query.setParameter(1, band.getName());
-    query.setParameter(2, place.getName());
+            + "WHERE c.band=?1 and c.place=?2 and c.date=?3 and c.tickets=?4", Concert.class);
+    query.setParameter(1, band);
+    query.setParameter(2, place);
     query.setParameter(3, date);
+    query.setParameter(4, tickets);
 
     List<Concert> concerts = query.getResultList();
     return new Vector<>(concerts);
@@ -269,28 +238,26 @@ public class DataAccess {
    *
    * @return collection of places
    */
-  public List<Place> getPlaces() {
-    TypedQuery<Place> query = db.createQuery("SELECT DISTINCT c.place FROM Concert c ORDER BY c.place", Place.class);
+  public List<String> getBands() {
+    TypedQuery<String> query = db.createQuery("SELECT DISTINCT c.band FROM Concert c ORDER BY c.band", String.class);
     return query.getResultList();
   }
 
   /**
-   * This method returns all the places with concerts, from all rides that depart from a given city
+   * This method returns all the places with concerts
    *
-   * @param band the musical group
    * @return collection of places
    */
-  public List<Place> getPlaces(Band band) {
-    TypedQuery<Place> query = db.createQuery("SELECT DISTINCT c.place FROM Concert c WHERE c.group=?1 ORDER BY c.place", Place.class);
-    query.setParameter(1, band);
+  public List<String> getPlaces() {
+    TypedQuery<String> query = db.createQuery("SELECT DISTINCT c.place FROM Concert c ORDER BY c.place", String.class);
     return query.getResultList();
   }
 
-  public List<Date> getDatesConcert(Concert concert, Place place, Integer tickets) {
+  public List<Date> getDatesConcert(String band, String place, Integer tickets) {
     System.out.println(">> DataAccess: getDatesConcert");
-    TypedQuery<Date> query = db.createQuery("SELECT DISTINCT c.date FROM Concert c WHERE c.concertID=?1 AND c.place=?2 AND c.maxTickets >?3 AND c.maxTickets >=?4", Date.class);
-    query.setParameter(1, concert.getConcertID());
-    query.setParameter(2, place.getName());
+    TypedQuery<Date> query = db.createQuery("SELECT DISTINCT c.date FROM Concert c WHERE c.band=?1 AND c.place=?2 AND c.maxTickets >?3 AND c.maxTickets >=?4", Date.class);
+    query.setParameter(1, band);
+    query.setParameter(2, place);
     query.setParameter(3, 0);
     query.setParameter(4, tickets);
     return query.getResultList();

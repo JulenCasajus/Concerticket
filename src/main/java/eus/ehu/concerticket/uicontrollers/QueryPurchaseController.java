@@ -3,6 +3,7 @@ package eus.ehu.concerticket.uicontrollers;
 import eus.ehu.concerticket.businessLogic.BlFacade;
 import eus.ehu.concerticket.domain.Purchase;
 import eus.ehu.concerticket.domain.Client;
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -21,17 +22,13 @@ public class QueryPurchaseController implements Controller{
     @FXML
     private TableColumn<Purchase, Integer> q3;
     @FXML
+    private TableColumn<Purchase, Float> q4;
+    @FXML
     private TableView<Purchase> tablePurchases;
-    private BlFacade businessLogic;
-    private MainGUIController controller;
+    private final BlFacade businessLogic;
 
     public QueryPurchaseController(BlFacade bl) {
          businessLogic = bl;
-         this.controller = new MainGUIController(businessLogic);
-    }
-
-    public void setMainGUIController(MainGUIController mainGUIController) {
-        this.controller = mainGUIController;
     }
 
     @FXML
@@ -40,18 +37,22 @@ public class QueryPurchaseController implements Controller{
         List<Purchase> purchases = businessLogic.getPurchases(client);
         tablePurchases.getItems().addAll(purchases);
 
-        q1.setCellValueFactory(data -> {
-            Purchase purchase = data.getValue();
-            return new SimpleStringProperty(purchase != null ? purchase.toString2() : "<no name>");
-        });
-        q2.setCellValueFactory(data -> {
-            Purchase purchase = data.getValue();
-            return new SimpleStringProperty(purchase != null ? purchase.getConcert().getDateWithoutHours(purchase.getConcert().getDate()) : "<no date>");
-        });
-        q3.setCellValueFactory(data -> {
-            Purchase purchase = data.getValue();
-            return new SimpleIntegerProperty(purchase != null ? purchase.getTickets() : 0).asObject();
-        });
+//        q1.setCellValueFactory(data -> {
+//            Purchase purchase = data.getValue();
+//            return new SimpleStringProperty(purchase != null ? purchase.toString2() : "<no name>");
+//        });
+//        q2.setCellValueFactory(data -> {
+//            Purchase purchase = data.getValue();
+//            return new SimpleStringProperty(purchase != null ? purchase.getConcert().getDateWithoutHours(purchase.getConcert().getDate()) : "<no date>");
+//        });
+//        q3.setCellValueFactory(data -> {
+//            Purchase purchase = data.getValue();
+//            return new SimpleIntegerProperty(purchase != null ? purchase.getTickets() : 0).asObject();
+//        });
+//        q4.setCellValueFactory(data -> {
+//            Purchase purchase = data.getValue();
+//            return new SimpleFloatProperty((purchase != null ? purchase.getPrice() : 0)).asObject();
+//        });
     }
 
     @Override
@@ -59,7 +60,7 @@ public class QueryPurchaseController implements Controller{
     }
 
     @Override
-    public void bookVisible(boolean b) {
+    public void buyVisible(boolean b) {
     }
 }
 

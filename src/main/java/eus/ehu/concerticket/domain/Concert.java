@@ -14,39 +14,46 @@ public class Concert implements Serializable {
     @GeneratedValue
     private Integer concertID;
     private Date date;
+    private Integer tickets;
     private float price;
     private Integer maxTickets;
     private float discount;
     private String place;
-    private String group;
+    private String band;
 
     public Concert() {
         super();
     }
 
-    public Concert(Integer concertID, Date date, float price, Integer maxTickets, float discount, String place, String group) {
+    public Concert(Integer concertID, Date date, Integer tickets, float price, Integer maxTickets, float discount, String place, String band) {
         super();
         this.concertID = concertID;
         this.date = date;
+        this.tickets = tickets;
         this.price = price;
         this.maxTickets = maxTickets;
         this.discount = discount;
         this.place = place;
-        this.group = group;
+        this.band = band;
     }
 
-    public Concert(Date date, float price, Integer maxTickets, float discount, String place, String group) {
+    public Concert(Date date, Integer tickets, float price, Integer maxTickets, float discount, String place, String band) {
         super();
         this.date = date;
+        this.tickets = tickets;
         this.price = price;
         this.maxTickets = maxTickets;
         this.discount = discount;
         this.place = place;
-        this.group = group;
+        this.band = band;
     }
 
-    public Integer getConcertID() {
-        return concertID;
+    public String getBand() {
+        return band;
+    }
+
+    public void setBand(String band) {
+        this.band = band;
     }
 
     public Date getDate() {
@@ -57,6 +64,14 @@ public class Concert implements Serializable {
         this.date = date;
     }
 
+    public Integer getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Integer tickets) {
+        this.tickets = tickets;
+    }
+
     public float getPrice() {
         return price;
     }
@@ -65,20 +80,12 @@ public class Concert implements Serializable {
         this.price = price;
     }
 
-    public Integer getMaxTickets() {
-        return maxTickets;
+    public String getPlace() {
+        return place;
     }
 
-    public void setMaxTickets(Integer maxTickets) {
-        this.maxTickets = maxTickets;
-    }
-
-    public float getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(float discount) {
-        this.discount = discount;
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     public String getDateWithoutHours(Date date) {
@@ -87,10 +94,10 @@ public class Concert implements Serializable {
     }
 
     public String toString() {
-        return  group + " | " + place + " | " + getDateWithoutHours(date);
+        return  band + " | " + place + " | " + getDateWithoutHours(date);
     }
 
     public String toString2() {
-        return  group + " | " + place;
+        return  band + " | " + place;
     }
 }

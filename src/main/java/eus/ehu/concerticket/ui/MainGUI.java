@@ -1,7 +1,6 @@
 package eus.ehu.concerticket.ui;
 
 import eus.ehu.concerticket.businessLogic.BlFacade;
-import eus.ehu.concerticket.uicontrollers.Controller;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,9 +11,6 @@ import java.util.ResourceBundle;
 
 public class MainGUI {
     private BlFacade businessLogic;
-    private Stage stage;
-    private Scene scene;
-    private Controller controller;
 
     public MainGUI(BlFacade bl) {
         Platform.startup(() -> {
@@ -25,10 +21,6 @@ public class MainGUI {
                 e.printStackTrace();
             }
         });
-    }
-
-    public BlFacade getBusinessLogic() {
-        return businessLogic;
     }
 
     public void setBusinessLogic(BlFacade afi) {

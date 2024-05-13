@@ -11,15 +11,15 @@ public class Purchase {
     private Integer tickets;
     private float price;
     @OneToOne
-    Client client;
-    @OneToOne
     Concert concert;
+    @ManyToOne
+    User user;
 
     public Purchase() {
     }
 
-    public Purchase(Client client, Concert concert, Integer tickets, float price) {
-        this.client = client;
+    public Purchase(User user, Concert concert, Integer tickets, float price) {
+        this.user = user;
         this.concert = concert;
         this.tickets = tickets;
         this.price = price;
@@ -47,7 +47,7 @@ public class Purchase {
 
     @Override
     public String toString() {
-        return "Purchase{" + "purchaseID=" + purchaseID + ", tickets=" + tickets + ", price=" + price + ", client=" + client + ", concert=" + concert + '}';
+        return "Purchase{" + "purchaseID=" + purchaseID + ", tickets=" + tickets + ", price=" + price + ", concert=" + concert + ", client=" + user + '}';
     }
 
     public String toString2() {

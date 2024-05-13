@@ -2,7 +2,6 @@ package eus.ehu.concerticket.domain;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -11,7 +10,7 @@ import java.util.Vector;
 public class Client extends User {
 
     @OneToMany(mappedBy = "Client", fetch = FetchType.EAGER, cascade= CascadeType.ALL)
-    private List<Purchase> purchases = new Vector<>();
+    private final List<Purchase> purchases = new Vector<>();
 
     public Client() {
         super();

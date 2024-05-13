@@ -2,8 +2,7 @@ package eus.ehu.concerticket.uicontrollers;
 
 import eus.ehu.concerticket.domain.Concert;
 import eus.ehu.concerticket.businessLogic.BlFacade;
-import eus.ehu.concerticket.domain.Concert;
-import eus.ehu.concerticket.ui.MainGUI;
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -11,20 +10,18 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import java.net.URL;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class QueryConcertController implements Controller {
     @FXML
-    private ResourceBundle resources;
+    private ComboBox<String> comboBand;
     @FXML
-    private URL location;
+    private ComboBox<String> comboPlace;
     @FXML
-    private Button btnClose;
+    private ComboBox<Integer> comboTickets;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -36,57 +33,46 @@ public class QueryConcertController implements Controller {
     @FXML
     private TableColumn<Concert, String> qc4;
     @FXML
-    private ComboBox<String> comboArrivalCity;
+    private Button btnBuy;
     @FXML
-    private ComboBox<String> comboDepartCity;
+    private Label buyTxt;
     @FXML
-    private ComboBox<Integer> comboSeats;
-    @FXML
-    private Button btnBook;
-    @FXML
-    private Label bookTxt;
-    @FXML
-    private TableView<Concert> tblRides;
-    private MainGUI mainGUI;
-    //private List<LocalDate> datesWithBooking = new ArrayList<>();
-    private BlFacade businessLogic;
-    private MainGUIController controller;
+    private TableView<Concert> tblConcerts;
+    private final BlFacade businessLogic;
+
+    ObservableList<String> bands = FXCollections.observableArrayList(new ArrayList<>());
+    ObservableList<String> places = FXCollections.observableArrayList(new ArrayList<>());
 
     public QueryConcertController(BlFacade bl) {
         businessLogic = bl;
     }
 
-    public void setMainGUIController(MainGUIController controller) {
-        this.controller = controller;
-    }
-
     @FXML
     public void initialize() {
-        /*
-        ObservableList<String> departureCities = FXCollections.observableArrayList(new ArrayList<>());
-        departureCities.setAll(businessLogic.getDepartCities());
-        ObservableList<String> arrivalCities = FXCollections.observableArrayList(new ArrayList<>());
-        comboDepartCity.setItems(departureCities);
-        comboArrivalCity.setItems(arrivalCities);
+        bands.setAll(businessLogic.getBands());
+        places.setAll(businessLogic.getPlaces());
+        comboBand.setItems(bands);
+        comboPlace.setItems(places);
 
-        // Update DatePicker cells when Arrival city changes
-        comboArrivalCity.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if(comboSeats.getValue() != null)// && datePicker.getValue() != null)
-                businessLogic.updateDatePickerCellFactory(datePicker, comboDepartCity.getValue(), newVal, comboSeats.getValue());
+        // Update DatePicker cells when Band changes
+        comboBand.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if(comboTickets.getValue() != null)// && datePicker.getValue() != null)
+                businessLogic.updateDatePickerCellFactory(datePicker, newVal, comboPlace.getValue(), comboTickets.getValue());
             updateTable();
         });
 
-        // Update DatePicker cells when Seats value changes
-        comboSeats.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if(newVal != null) //comboArrivalCity.getValue() != null && datePicker.getValue() != null) {
-                businessLogic.updateDatePickerCellFactory(datePicker, comboDepartCity.getValue(), comboArrivalCity.getValue(), newVal);
+        // Update DatePicker cells when Place changes
+        comboPlace.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if(comboTickets.getValue() != null)// && datePicker.getValue() != null)
+                businessLogic.updateDatePickerCellFactory(datePicker, comboBand.getValue(), newVal, comboTickets.getValue());
             updateTable();
         });
 
-        // when the user selects a departure city, update the arrival cities
-        comboDepartCity.setOnAction(actionEvent -> {
-            arrivalCities.clear();
-            arrivalCities.setAll(businessLogic.getArrivalCities(comboDepartCity.getValue()));
+        // Update DatePicker cells when Ticket value changes
+        comboTickets.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if(newVal != null)
+                businessLogic.updateDatePickerCellFactory(datePicker, comboBand.getValue(), comboPlace.getValue(), newVal);
+            updateTable();
         });
 
         // a date has been chosen, update the combobox of Rides
@@ -95,69 +81,63 @@ public class QueryConcertController implements Controller {
                 updateTable();
         });
 
-        comboSeats.setItems(FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9));
+        comboTickets.setItems(FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9));
 
         qc1.setCellValueFactory(data -> {
-            Ride ride = data.getValue();
-            return new SimpleStringProperty(ride != null ? ride.toString2() : "<no name>");
+            Concert concert = data.getValue();
+            return new SimpleStringProperty(concert != null ? concert.toString2() : "<no name>");
         });
 
         qc2.setCellValueFactory(data -> {
-            Ride ride = data.getValue();
-            return new SimpleIntegerProperty(ride != null ? ride.getNumPlaces() : 0).asObject();
+            Concert concert = data.getValue();
+            return new SimpleIntegerProperty(concert != null ? concert.getTickets() : 0).asObject();
         });
 
         qc3.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         qc4.setCellValueFactory(data -> {
-            Ride ride = data.getValue();
-            return new SimpleStringProperty(ride != null ? ride.getDriver().toString2() : "<no name>");
+            Concert concert = data.getValue();
+            return new SimpleFloatProperty(concert != null ? concert.getPrice() : 0).asString();
         });
 
-        tblRides.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+//        tblConcerts.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        tblRides.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null && businessLogic.getCurrentTraveler()!=null) {
-                btnBook.setDisable(false);
-            } else {
-                btnBook.setDisable(true);
-            }
-        });*/
+        tblConcerts.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->
+                btnBuy.setDisable(newSelection == null || businessLogic.getCurrentClient() == null));
     }
 
     @FXML
-    private void reserveButton() {
-        /*Ride ride2 = tblRides.getSelectionModel().getSelectedItem();
-        int seats = comboSeats.getSelectionModel().getSelectedItem();
-        businessLogic.bookRide(businessLogic.getCurrentTraveler(),ride2, seats, Booking.Status.Pending);
-        tblRides.getItems().clear();
-        List<Ride> rides = businessLogic.getRidesWithSeats(comboDepartCity.getValue(), comboArrivalCity.getValue(), Date.from(datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()), comboSeats.getValue());
-        for (Ride ride : rides) {
-            tblRides.getItems().add(ride);
+    private void buyButton() {
+        Concert concert = tblConcerts.getSelectionModel().getSelectedItem();
+        int tickets = comboTickets.getSelectionModel().getSelectedItem();
+        businessLogic.purchaseConcert(businessLogic.getCurrentClient(), concert, tickets);
+        tblConcerts.getItems().clear();
+        List<Concert> concerts = businessLogic.getConcerts(comboBand.getValue(), comboPlace.getValue(), Date.from(datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()), comboTickets.getValue());
+        for (Concert concert1 : concerts) {
+            tblConcerts.getItems().add(concert1);
         }
-        btnBook.setDisable(true);*/
+        btnBuy.setDisable(true);
     }
 
     @FXML
     public void updateTable() {
-        /*
-        tblRides.getItems().clear();
-        if(comboArrivalCity.getValue() != null && comboSeats.getValue() != null && datePicker.getValue() != null) {
-            List<Ride> rides = businessLogic.getRidesWithSeats(comboDepartCity.getValue(), comboArrivalCity.getValue(), Date.from(datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()), comboSeats.getValue());
-            tblRides.getItems().addAll(rides);
-        }*/
+        tblConcerts.getItems().clear();
+        if(comboPlace.getValue() != null && comboTickets.getValue() != null && datePicker.getValue() != null) {
+            List<Concert> concerts = businessLogic.getConcerts(comboBand.getValue(), comboPlace.getValue(), Date.from(datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()), comboTickets.getValue());
+            tblConcerts.getItems().addAll(concerts);
+        }
     }
 
     public void setNull() {
         datePicker.setValue(null);
-        comboSeats.setValue(null);
-        comboDepartCity.setValue(null);
-        comboArrivalCity.setValue(null);
-        tblRides.getItems().clear();
+        comboBand.setValue(null);
+        comboPlace.setValue(null);
+        comboTickets.setValue(null);
+        tblConcerts.getItems().clear();
     }
 
-    public void bookVisible(boolean b) {
-        btnBook.setVisible(b);
-        bookTxt.setVisible(!b);
+    public void buyVisible(boolean b) {
+        btnBuy.setVisible(b);
+        buyTxt.setVisible(!b);
     }
 }

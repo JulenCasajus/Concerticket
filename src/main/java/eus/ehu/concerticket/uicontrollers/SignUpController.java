@@ -6,77 +6,82 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 
 public class SignUpController implements Controller {
-
+    public MainGUIController controller;
+    public BlFacade businessLogic;
     @FXML
-    private PasswordField passwordFieldSingUp;
-    @FXML
-    private PasswordField passwordFieldSingUp2;
-    @FXML
-    private Label successful;
-    @FXML
-    private TextField userFieldSingUp;
-    private MainGUIController controller;
-    private BlFacade businessLogic;
-    @FXML
-    public RadioButton staff;
+    private TextField usernameField;
     @FXML
     private TextField emailField;
     @FXML
-    private Button registerButton;
+    private PasswordField passwordField;
+    @FXML
+    private PasswordField passwordField2;
+    @FXML
+    public RadioButton staff;
+    @FXML
+    private PasswordField staffCodeField;
+    @FXML
+    private Button signUpButton;
+    @FXML
+    private Button logInButton;
+    @FXML
+    private Label successful;
+
+    String username, password, password2, email, staffCode;
 
     public SignUpController(BlFacade bl) {
         businessLogic = bl;
         this.controller = new MainGUIController(businessLogic);
     }
 
-    public void setMainGUIController(MainGUIController controller) {
-        this.controller = controller;
-    }
-
     public void initialize() {
-        registerButton.setOnKeyPressed(event -> {
+        signUpButton.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                signUpBtnClick();
+                signUpClick();
+            }
+        });
+        staff.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                staff.fire();
+            }
+        });
+        logInButton.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                logInClick();
             }
         });
     }
 
     @FXML
-    public void logInBtnClick() {
-        System.out.println("LogIn");
-        controller.showScene("LogIn");
+    public void logInClick() {
+        controller.logInClick();
     }
 
     @FXML
-    void signUpBtnClick() {
-
-        String username = userFieldSingUp.getText();
-        String password = passwordFieldSingUp.getText();
-        String password2 = passwordFieldSingUp2.getText();
-        String email = emailField.getText();
-
-        /*
-            RadioButton selectedToggle = (RadioButton) getSelectedToggle();
-            String mode = selectedToggle.getText();
-        */
+    void signUpClick() {
+        username = usernameField.getText();
+        email = emailField.getText();
+        password = passwordField.getText();
+        password2 = passwordField.getText();
+        staffCode = staffCodeField.getText();
 
         if(businessLogic.checkCredentials(username, email)) { //Username's and email's format correct
             if(businessLogic.checkPasswords(password, password2)) { //Password and password2 match
                 if(!businessLogic.exists(username, email)) { //Account does not exist already
-                    /*if (mode.equals("Staff")) {
+                    if (staff.isSelected() && staffCode.equals("STAFFCODE")) {
                         if (!businessLogic.createStaff(email, username, password)) {
                             successful.setText("Staff creation failed");
                         }
                         System.out.println("Staff created successfully");
-                    } else {*/
+                    } else {
                         if (!businessLogic.createClient(email, username, password)) {
                             successful.setText("Client creation failed");
                         }
                         System.out.println("Client created successfully");
-                    //}
-                    this.SetAllEmpty();
+                    }
+                    this.setAllEmpty();
                     successful.setText("");
-                    controller.showScene("Login");
+                    controller.showScene("LogIn");
                 } else { //Account exists already
                     successful.setText("Error: User already exists");
                 }
@@ -90,14 +95,16 @@ public class SignUpController implements Controller {
 
     @FXML
     void applyClick() {
+        staffCodeField.setDisable(!staff.isSelected());
     }
 
     @FXML
-    public void SetAllEmpty() {
-        userFieldSingUp.setText("");
-        passwordFieldSingUp.setText("");
-        passwordFieldSingUp2.setText("");
-        emailField.setText("");
+    public void setAllEmpty() {
+        usernameField.clear();
+        passwordField.clear();
+        passwordField2.clear();
+        emailField.clear();
+        staffCodeField.clear();
     }
 
     @Override
@@ -105,6 +112,6 @@ public class SignUpController implements Controller {
     }
 
     @Override
-    public void bookVisible(boolean b) {
+    public void buyVisible(boolean b) {
     }
 }

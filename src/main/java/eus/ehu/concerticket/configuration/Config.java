@@ -12,7 +12,8 @@ public class Config {
 	public static Config getInstance(){
 		return instance;
 	}
-	private static Config instance = new Config();
+
+	public static Config instance = new Config();
 
 	private Config(){
 		loadConfig();
@@ -30,10 +31,6 @@ public class Config {
 
 	public String getDataBaseOpenMode() {
 		return prop.getProperty("db.openmode");
-	}
-
-	public String getDatabaseName() {
-		return prop.getProperty("db.name");
 	}
 
 	public boolean isBusinessLogicLocal() {

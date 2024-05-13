@@ -2,7 +2,6 @@ package eus.ehu.concerticket.uicontrollers;
 
 import eus.ehu.concerticket.businessLogic.BlFacade;
 import eus.ehu.concerticket.ui.MainGUI;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class MainGUIController implements Controller {
 
-    private BlFacade businessLogic;
+    private final BlFacade businessLogic;
     @FXML
     private BorderPane mainWrapper;
     @FXML
@@ -48,7 +47,7 @@ public class MainGUIController implements Controller {
     }
 
     @FXML
-    void logInClick(ActionEvent event) {
+    void logInClick() {
         System.out.println("LogIn");
         showScene("LogIn");
     }
@@ -61,26 +60,42 @@ public class MainGUIController implements Controller {
     }
 
     @FXML
-    void signUpClick(ActionEvent event) {
+    void signUpClick() {
         System.out.println("SignUp");
         showScene("SignUp");
     }
 
     @FXML
-    void queryConcerts(ActionEvent event) {
-        System.out.println("QueryConcerts");
-        showScene("QueryConcerts");
+    void logOutClick() {
+        logInButton.setVisible(true);
+        signUpButton.setVisible(true);
+        logOutButton.setVisible(false);
+        lblUser.setText("");
+        image.setVisible(false);
+        businessLogic.setUserNull();
+        setAbleCreateConcertBtn(false);
+        setAbleQueryPurchaseBtn(false);
+        showScene("LogIn");
+        buyVisible(false);
+        setNull();
     }
 
     @FXML
-    void createConcert(ActionEvent event) {
+    void queryConcertClick() {
+        System.out.println("QueryConcert");
+        showScene("QueryConcert");
+    }
+
+    @FXML
+    void createConcertClick() {
         System.out.println("CreateConcert");
         showScene("CreateConcert");
     }
 
     @FXML
-    void queryPurchaseClick(ActionEvent event) {
+    void queryPurchaseClick() {
         System.out.println("QueryPurchase");
+        queryPurchaseWin = load("QueryPurchase.fxml");
         showScene("QueryPurchase");
     }
 
@@ -89,40 +104,39 @@ public class MainGUIController implements Controller {
         setAbleCreateConcertBtn(false);
         setAbleQueryPurchaseBtn(false);
         queryConcertWin = load("QueryConcert.fxml");
-        createConcertWin = load("CreateConcert.fxml");
         logInWin = load("LogIn.fxml");
         signUpWin = load("SignUp.fxml");
-        queryPurchaseWin = load("QueryPurchase.fxml");
+        createConcertWin = load("CreateConcert.fxml");
         mainWrapper.setCenter(queryConcertWin.ui);
 
-        queryConcertBtn.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                queryConcerts(new ActionEvent());
-            }
-        });
-        createConcertBtn.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                createConcert(new ActionEvent());
-            }
-        });
         logInButton.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                logInClick(new ActionEvent());
+                logInClick();
             }
         });
         signUpButton.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                signUpClick(new ActionEvent());
+                signUpClick();
             }
         });
         logOutButton.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                logOutClick(new ActionEvent());
+                logOutClick();
+            }
+        });
+        queryConcertBtn.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                queryConcertClick();
+            }
+        });
+        createConcertBtn.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                createConcertClick();
             }
         });
         queryPurchaseBtn.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                queryPurchaseClick(new ActionEvent());
+                queryPurchaseClick();
             }
         });
     }
@@ -131,28 +145,18 @@ public class MainGUIController implements Controller {
         switch (scene) {
             case "QueryConcert":
                 mainWrapper.setCenter(queryConcertWin.ui);
-                QueryConcertController queryConcertController = (QueryConcertController) queryConcertWin.controller;
-                queryConcertController.setMainGUIController(this);
                 break;
             case "CreateConcert":
                 mainWrapper.setCenter(createConcertWin.ui);
-                CreateConcertController createConcertController = (CreateConcertController) createConcertWin.controller;
-                createConcertController.setMainGUIController(this);
                 break;
             case "SignUp":
                 mainWrapper.setCenter(signUpWin.ui);
-                SignUpController SignUpController = (SignUpController) signUpWin.controller;
-                SignUpController.setMainGUIController(this);
                 break;
             case "LogIn":
                 mainWrapper.setCenter(logInWin.ui);
-                LogInController logInController = (LogInController) logInWin.controller;
-                logInController.setMainGUIController(this);
                 break;
-            case "queryPurchase":
+            case "QueryPurchase":
                 mainWrapper.setCenter(queryPurchaseWin.ui);
-                QueryPurchaseController queryPurchaseController = (QueryPurchaseController) queryPurchaseWin.controller;
-                queryPurchaseController.setMainGUIController(this);
                 break;
             default:
                 break;
@@ -181,26 +185,10 @@ public class MainGUIController implements Controller {
             e.printStackTrace();
             throw new RuntimeException("Error loading FXML file: " + e.getMessage());
         }
-
-    }
-
-    @FXML
-    void logOutClick(ActionEvent event) {
-        logInButton.setVisible(true);
-        signUpButton.setVisible(true);
-        logOutButton.setVisible(false);
-        lblUser.setText("");
-        image.setVisible(false);
-        businessLogic.setUserNull();
-        setAbleCreateConcertBtn(false);
-        setAbleQueryPurchaseBtn(false);
-        showScene("LogIn");
-        bookVisible(false);
-        setNull();
     }
 
     void setAbleCreateConcertBtn(boolean able) {
-        createConcertBtn.setDisable(!able);
+        createConcertBtn.setVisible(!able);
     }
 
     void setAbleQueryPurchaseBtn(boolean able) {
@@ -220,6 +208,6 @@ public class MainGUIController implements Controller {
     }
 
     @Override
-    public void bookVisible(boolean b) {
+    public void buyVisible(boolean b) {
     }
 }

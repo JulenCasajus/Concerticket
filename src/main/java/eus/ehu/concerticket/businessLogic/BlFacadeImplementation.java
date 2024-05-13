@@ -39,11 +39,16 @@ public class BlFacadeImplementation implements BlFacade {
         this.currentStaff = null;
     }
 
-    public List<Place> getPlaces() {
+    public List<String> getBands() {
+        return dbManager.getBands();
+    }
+
+
+    public List<String> getPlaces() {
         return dbManager.getPlaces();
     }
 
-    public List<Date> getDatesConcert(Concert concert, Place place, Integer tickets) {
+    public List<Date> getDatesConcert(String concert, String place, Integer tickets) {
         return dbManager.getDatesConcert(concert, place, tickets);
     }
 
@@ -98,19 +103,22 @@ public class BlFacadeImplementation implements BlFacade {
         return dbManager.checkPasswords(password, password2);
     }
     @Override
-    public Concert createConcert(Date date, float price, Integer maxTickets, float discount, String place) throws ConcertMustBeLaterThanTodayException, ConcertAlreadyExistException {
-        return dbManager.createConcert(date, price, maxTickets, discount, place);
+    public void createConcert(String band, String place, Date date, float price, Integer maxTickets, float discount) throws ConcertMustBeLaterThanTodayException, ConcertAlreadyExistException {
+        dbManager.createConcert(band, place, date, price, discount);
     }
 
-    public List<Concert> getConcerts(Band band, Place place, Date date) {
-        return dbManager.getConcerts(band, place, date);
+    public List<Concert> getConcerts(String band, String place, Date date, Integer tickets) {
+        return dbManager.getConcerts(band, place, date, tickets);
     }
 
     public void setConcert(Concert concert) {
         dbManager.setConcert(concert);
     }
 
-    public void updateDatePickerCellFactory(DatePicker datePicker, Concert concert, Place place, int tickets) {
+    public void purchaseConcert(Client client, Concert concert, Integer tickets) {
+    }
+
+    public void updateDatePickerCellFactory(DatePicker datePicker, String concert, String place, int tickets) {
         List<Date> dates = getDatesConcert(concert, place, tickets);
 
         datesWithConcert.clear();

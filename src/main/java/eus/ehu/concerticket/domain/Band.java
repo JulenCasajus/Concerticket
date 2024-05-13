@@ -1,8 +1,6 @@
 package eus.ehu.concerticket.domain;
 
 import jakarta.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 public class Band {
@@ -27,21 +25,5 @@ public class Band {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getCreationYear() {
-        return creationYear;
-    }
-
-    public void setCreationYear(Integer creationYear) {
-        this.creationYear = creationYear;
-    }
-
-    public String getLeader() {
-        return leader;
-    }
-
-    public void setLeader(String leader) {
-        this.leader = leader;
     }
 }

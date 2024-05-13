@@ -17,9 +17,11 @@ public interface BlFacade  {
 
     void setUserNull();
 
-    List<Place> getPlaces();
+    List<String> getBands();
 
-    List<Date> getDatesConcert(Concert concert, Place Place, Integer tickets);
+    List<String> getPlaces();
+
+    List<Date> getDatesConcert(String concert, String Place, Integer tickets);
 
     List<Purchase> getPurchases(Client client);
 
@@ -45,11 +47,13 @@ public interface BlFacade  {
 
     boolean checkPasswords(String password, String password2);
 
-    Concert createConcert(Date date, float price, Integer maxTickets, float discount, String place) throws ConcertMustBeLaterThanTodayException, ConcertAlreadyExistException;
+    void createConcert(String band, String place, Date date, float price, Integer maxTickets, float discount) throws ConcertMustBeLaterThanTodayException, ConcertAlreadyExistException;
 
-    List<Concert> getConcerts(Band band, Place place, Date date);
+    List<Concert> getConcerts(String band, String place, Date date, Integer tickets);
 
     void setConcert(Concert concert);
 
-    void updateDatePickerCellFactory(DatePicker datePicker, Concert concert, Place place, int tickets);
+    void purchaseConcert(Client client, Concert concert, Integer tickets);
+
+    void updateDatePickerCellFactory(DatePicker datePicker, String concert, String place, int tickets);
 }
