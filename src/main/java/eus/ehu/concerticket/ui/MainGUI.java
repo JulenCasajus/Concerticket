@@ -14,8 +14,7 @@ public class MainGUI {
     private BlFacade businessLogic;
     private Stage stage;
     private Scene scene;
-
-    private ModuleLayer.Controller controller;
+    private Controller controller;
 
     public MainGUI(BlFacade bl) {
         Platform.startup(() -> {

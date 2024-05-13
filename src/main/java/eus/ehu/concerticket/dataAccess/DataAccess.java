@@ -23,7 +23,15 @@ public class DataAccess {
   protected EntityManagerFactory emf;
 
   public DataAccess() {
-    this.open(true);
+    this.open();
+  }
+
+  public DataAccess(boolean initializeMode) {
+    this.open(initializeMode);
+  }
+
+  public void open() {
+    open(false);
   }
 
   public void open(boolean initializeMode) {
@@ -67,14 +75,17 @@ public class DataAccess {
 
     this.reset();
 
-    try {
+    db.getTransaction().begin();
 
-      db.getTransaction().begin();
+    try {
 
       generateTestingData();
 
       Client client = new Client("a", "a@", "a");
+      Staff staff = new Staff("b", "b@", "b");
+
       db.persist(client);
+      db.persist(staff);
 
       db.getTransaction().commit();
       System.out.println("The database has been initialized");
