@@ -9,8 +9,8 @@ import java.util.Vector;
 @DiscriminatorValue("CLIENT")
 public class Client extends User {
 
-    @OneToMany(mappedBy = "Client", fetch = FetchType.EAGER, cascade= CascadeType.ALL)
-    private final List<Purchase> purchases = new Vector<>();
+    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+    private List<Purchase> purchases = new Vector<>();
 
     public Client() {
         super();

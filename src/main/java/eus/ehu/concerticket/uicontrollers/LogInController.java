@@ -23,8 +23,7 @@ public class LogInController implements Controller {
     private TextField userField;
 
     public LogInController(BlFacade bl) {
-        businessLogic = bl;
-        this.controller = new MainGUIController(businessLogic);
+        this.controller = new MainGUIController(bl);
     }
 
     public void initialize() {
@@ -52,27 +51,28 @@ public class LogInController implements Controller {
             controller.setAbleCreateConcertBtn(false);
             controller.setAbleQueryPurchaseBtn(true);
             controller.showScene("CreateRide");
-            controller.hideLogInButton();
+            controller.hideLogInButton(true);
             buyVisible(false);
+            done.setText("");
         } else if (businessLogic.isStaff(user,password)) {
             businessLogic.setCurrentStaff(user, password);
             controller.setUsername(businessLogic.getCurrentStaff().getUsername());
             controller.showScene("QueryRides");
-            controller.hideLogInButton();
+            controller.hideLogInButton(true);
             controller.setAbleCreateConcertBtn(true);
             controller.setAbleQueryPurchaseBtn(true);
             buyVisible(true);
+            done.setText("");
         } else {
             done.setText("Error");
         }
-        done.setText("");
         passwordField.setText("");
         userField.setText("");
-        controller.setVisible(true);
     }
     @FXML
     void signUpClick() {
-        controller.signUpClick();
+        System.out.println("SignUp");
+        controller.showScene("SignUp");
     }
 
     @Override

@@ -33,15 +33,14 @@ public class QueryConcertController implements Controller {
     @FXML
     private TableColumn<Concert, String> qc4;
     @FXML
+    private TableColumn<Concert, String> qc5;
+    @FXML
     private Button btnBuy;
     @FXML
     private Label buyTxt;
     @FXML
     private TableView<Concert> tblConcerts;
-    private final BlFacade businessLogic;
-
-    ObservableList<String> bands = FXCollections.observableArrayList(new ArrayList<>());
-    ObservableList<String> places = FXCollections.observableArrayList(new ArrayList<>());
+    BlFacade businessLogic;
 
     public QueryConcertController(BlFacade bl) {
         businessLogic = bl;
@@ -49,8 +48,13 @@ public class QueryConcertController implements Controller {
 
     @FXML
     public void initialize() {
+
+        ObservableList<String> bands = FXCollections.observableArrayList(new ArrayList<>());
+        ObservableList<String> places = FXCollections.observableArrayList(new ArrayList<>());
+
         bands.setAll(businessLogic.getBands());
         places.setAll(businessLogic.getPlaces());
+
         comboBand.setItems(bands);
         comboPlace.setItems(places);
 
@@ -96,6 +100,10 @@ public class QueryConcertController implements Controller {
         qc3.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         qc4.setCellValueFactory(data -> {
+            Concert concert = data.getValue();
+            return new SimpleFloatProperty(concert != null ? concert.getPrice() : 0).asString();
+        });
+        qc5.setCellValueFactory(data -> {
             Concert concert = data.getValue();
             return new SimpleFloatProperty(concert != null ? concert.getPrice() : 0).asString();
         });

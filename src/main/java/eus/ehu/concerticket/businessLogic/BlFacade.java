@@ -19,7 +19,11 @@ public interface BlFacade  {
 
     List<String> getBands();
 
+    Band getBand(String band);
+
     List<String> getPlaces();
+
+    Place getPlace(String place);
 
     List<Date> getDatesConcert(String concert, String Place, Integer tickets);
 
@@ -47,7 +51,7 @@ public interface BlFacade  {
 
     boolean checkPasswords(String password, String password2);
 
-    void createConcert(String band, String place, Date date, float price, Integer maxTickets, float discount) throws ConcertMustBeLaterThanTodayException, ConcertAlreadyExistException;
+    void createConcert(Band band, Place place, Date date, float price, float discount, Integer tickets, Integer maxTickets);
 
     List<Concert> getConcerts(String band, String place, Date date, Integer tickets);
 

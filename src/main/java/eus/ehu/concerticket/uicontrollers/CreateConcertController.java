@@ -1,6 +1,8 @@
 package eus.ehu.concerticket.uicontrollers;
 
 import eus.ehu.concerticket.businessLogic.BlFacade;
+import eus.ehu.concerticket.domain.Band;
+import eus.ehu.concerticket.domain.Place;
 import eus.ehu.concerticket.exceptions.ConcertAlreadyExistException;
 import eus.ehu.concerticket.exceptions.ConcertMustBeLaterThanTodayException;
 import eus.ehu.concerticket.utils.Dates;
@@ -11,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.util.Callback;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class CreateConcertController implements Controller {
@@ -31,8 +34,6 @@ public class CreateConcertController implements Controller {
     private Label lblError;
 
 
-    private final ObservableList<String> bands = FXCollections.observableArrayList(new ArrayList<>());
-    private final ObservableList<String> places = FXCollections.observableArrayList(new ArrayList<>());
 
     public CreateConcertController(BlFacade bl) {
         businessLogic = bl;
@@ -40,18 +41,16 @@ public class CreateConcertController implements Controller {
 
     @FXML
     void initialize() {
-
         btnCreateConcert.setOnAction(event -> createConcertClick());
 
+        ObservableList<String> bands = FXCollections.observableArrayList(new ArrayList<>());
+        ObservableList<String> places = FXCollections.observableArrayList(new ArrayList<>());
+
         bands.setAll(businessLogic.getBands());
+        places.setAll(businessLogic.getPlaces());
+
         comboBand.setItems(bands);
         comboPlace.setItems(places);
-
-        // when the user selects a departure city, update the arrival cities
-        comboBand.setOnAction(actionEvent -> {
-            bands.clear();
-            places.setAll(businessLogic.getPlaces());
-        });
 
         datePicker.setDayCellFactory(new Callback<>() {
             @Override
@@ -60,7 +59,6 @@ public class CreateConcertController implements Controller {
                     @Override
                     public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
-
                         if (!empty && item != null) {
                             this.setStyle("-fx-background-color: pink");
                         }
@@ -75,23 +73,20 @@ public class CreateConcertController implements Controller {
 
         clearErrorLabels();
 
-        //  Event event = comboEvents.getSelectionModel().getSelectedItem();
+        String bandName = comboBand.getEditor().getText();
+        String placeName = comboPlace.getEditor().getText();
+
+        Band band = businessLogic.getBand(bandName);
+        Place place = businessLogic.getPlace(placeName);
         String errors = field_Errors();
 
         if (errors != null) {
-            // businessLogic.createQuestion(event, inputQuestion, inputPrice);
             displayMessage(errors, "danger");
-
         } else {
-            try {
-
-                int tickets = Integer.parseInt(txtNumberOfTickets.getText());
-                float price = Float.parseFloat(txtPrice.getText());
-                businessLogic.createConcert(comboBand.getEditor().getText(), comboPlace.getEditor().getText(), Dates.convertToDate(datePicker.getValue()), price, tickets, 0);
-                displayMessage(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.RideCreated"), "success");
-            } catch (ConcertMustBeLaterThanTodayException | ConcertAlreadyExistException e1) {
-                displayMessage(e1.getMessage(), "danger");
-            }
+            int tickets = Integer.parseInt(txtNumberOfTickets.getText());
+            float price = Float.parseFloat(txtPrice.getText());
+            businessLogic.createConcert( band, place, Dates.convertToDate(datePicker.getValue()), price, 0, tickets, 0);
+            displayMessage(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.RideCreated"), "success");
         }
     }
 
@@ -101,7 +96,6 @@ public class CreateConcertController implements Controller {
     }
 
     private String field_Errors() {
-
         try {
             if ((comboBand.getEditor().getText().isEmpty()) || (comboPlace.getEditor().getText().isEmpty()) || (txtNumberOfTickets.getText().isEmpty()) || (txtPrice.getText().isEmpty()))
                 return ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorQuery");

@@ -3,6 +3,7 @@ package eus.ehu.concerticket.domain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,26 +19,16 @@ public class Concert implements Serializable {
     private float price;
     private Integer maxTickets;
     private float discount;
-    private String place;
-    private String band;
+    @OneToOne
+    private Place place;
+    @OneToOne
+    private Band band;
 
     public Concert() {
         super();
     }
 
-    public Concert(Integer concertID, Date date, Integer tickets, float price, Integer maxTickets, float discount, String place, String band) {
-        super();
-        this.concertID = concertID;
-        this.date = date;
-        this.tickets = tickets;
-        this.price = price;
-        this.maxTickets = maxTickets;
-        this.discount = discount;
-        this.place = place;
-        this.band = band;
-    }
-
-    public Concert(Date date, Integer tickets, float price, Integer maxTickets, float discount, String place, String band) {
+    public Concert(Band band, Place place, Date date, float price, float discount, Integer tickets, Integer maxTickets) {
         super();
         this.date = date;
         this.tickets = tickets;
@@ -48,11 +39,11 @@ public class Concert implements Serializable {
         this.band = band;
     }
 
-    public String getBand() {
+    public Band getBand() {
         return band;
     }
 
-    public void setBand(String band) {
+    public void setBand(Band band) {
         this.band = band;
     }
 
@@ -80,11 +71,11 @@ public class Concert implements Serializable {
         this.price = price;
     }
 
-    public String getPlace() {
+    public Place getPlace() {
         return place;
     }
 
-    public void setPlace(String place) {
+    public void setPlace(Place place) {
         this.place = place;
     }
 

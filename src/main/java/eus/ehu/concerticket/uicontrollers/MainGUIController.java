@@ -53,10 +53,12 @@ public class MainGUIController implements Controller {
     }
 
     @FXML
-    public void hideLogInButton() {
-        logInButton.setVisible(false);
-        signUpButton.setVisible(false);
-        logOutButton.setVisible(true);
+    public void hideLogInButton(boolean b) {
+        logInButton.setVisible(!b);
+        signUpButton.setVisible(!b);
+        logOutButton.setVisible(b);
+        image.setVisible(b);
+        lblUser.setVisible(b);
     }
 
     @FXML
@@ -193,10 +195,6 @@ public class MainGUIController implements Controller {
 
     void setAbleQueryPurchaseBtn(boolean able) {
         queryPurchaseBtn.setDisable(!able);
-    }
-
-    public void setVisible(boolean visible) {
-        image.setVisible(visible);
     }
 
     public void setUsername(String username) {

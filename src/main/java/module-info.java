@@ -1,7 +1,6 @@
-module eus.ehu.sharetrip {
+module eus.ehu.concerticket {
     requires javafx.controls;
     requires javafx.fxml;
-
     requires org.kordamp.bootstrapfx.core;
     requires org.hibernate.orm.core;
     requires org.apache.logging.log4j;

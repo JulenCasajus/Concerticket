@@ -43,9 +43,16 @@ public class BlFacadeImplementation implements BlFacade {
         return dbManager.getBands();
     }
 
+    public Band getBand(String band) {
+        return dbManager.getBand(band);
+    }
 
     public List<String> getPlaces() {
         return dbManager.getPlaces();
+    }
+
+    public Place getPlace(String name) {
+        return dbManager.getPlace(name);
     }
 
     public List<Date> getDatesConcert(String concert, String place, Integer tickets) {
@@ -103,8 +110,8 @@ public class BlFacadeImplementation implements BlFacade {
         return dbManager.checkPasswords(password, password2);
     }
     @Override
-    public void createConcert(String band, String place, Date date, float price, Integer maxTickets, float discount) throws ConcertMustBeLaterThanTodayException, ConcertAlreadyExistException {
-        dbManager.createConcert(band, place, date, price, discount);
+    public void createConcert(Band band, Place place, Date date, float price, float discount, Integer tickets, Integer maxTickets) {
+        dbManager.createConcert(band, place, date, price, discount, tickets, maxTickets);
     }
 
     public List<Concert> getConcerts(String band, String place, Date date, Integer tickets) {
@@ -118,8 +125,8 @@ public class BlFacadeImplementation implements BlFacade {
     public void purchaseConcert(Client client, Concert concert, Integer tickets) {
     }
 
-    public void updateDatePickerCellFactory(DatePicker datePicker, String concert, String place, int tickets) {
-        List<Date> dates = getDatesConcert(concert, place, tickets);
+    public void updateDatePickerCellFactory(DatePicker datePicker, String band, String place, int tickets) {
+        List<Date> dates = getDatesConcert(band, place, tickets);
 
         datesWithConcert.clear();
         for (Date day : dates) {

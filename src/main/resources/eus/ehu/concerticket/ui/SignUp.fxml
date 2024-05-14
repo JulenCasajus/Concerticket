@@ -27,7 +27,7 @@
         <Cursor fx:constant="HAND"/>
         </cursor>
     </Button>
-    <Label layoutX="340.0" layoutY="375.0" prefHeight="32.0" text="Already have an account?" textAlignment="CENTER"/>
+    <Label layoutX="340.0" layoutY="375.0" prefHeight="32.0" text="%AlreadyHaveAnAccount?" textAlignment="CENTER"/>
     <Button fx:id="logInButton" blendMode="HARD_LIGHT" layoutX="490.0" layoutY="375.0" mnemonicParsing="false" onAction="#logInClick" prefHeight="32.0" text="%LogIn" textFill="#0042ff">
         <opaqueInsets>
           <Insets/>

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING)
 @Table(name = "USERS")
 public class User {
@@ -50,5 +49,4 @@ public class User {
     public String toString2() {
         return username;
     }
-
 }
