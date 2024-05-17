@@ -27,4 +27,20 @@ public class Place {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Integer getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    public void setMaxCapacity(Integer maxCapacity) {
+        this.maxCapacity = maxCapacity;
+    }
+
+    public Integer getMaxTickets() {
+        return maxTickets;
+    }
+
+    public void setMaxTickets(Integer maxTickets) {
+        this.maxTickets = maxTickets;
+    }
 }

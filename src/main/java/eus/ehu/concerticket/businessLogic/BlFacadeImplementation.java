@@ -30,7 +30,6 @@ public class BlFacadeImplementation implements BlFacade {
         boolean initialize = config.getDataBaseOpenMode().equals("initialize");
         dbManager = new DataAccess();
         if (initialize) dbManager.initializeDB();
-//        dbManager.close();
     }
 
     @Override
@@ -110,8 +109,8 @@ public class BlFacadeImplementation implements BlFacade {
         return dbManager.checkPasswords(password, password2);
     }
     @Override
-    public void createConcert(Band band, Place place, Date date, float price, float discount, Integer tickets, Integer maxTickets) {
-        dbManager.createConcert(band, place, date, price, discount, tickets, maxTickets);
+    public void createConcert(Band band, Place place, Date date, Integer maxTickets, float price, float discount) {
+        dbManager.createConcert(band, place, date, maxTickets, price, discount);
     }
 
     public List<Concert> getConcerts(String band, String place, Date date, Integer tickets) {

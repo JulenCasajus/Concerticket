@@ -147,18 +147,28 @@ public class MainGUIController implements Controller {
         switch (scene) {
             case "QueryConcert":
                 mainWrapper.setCenter(queryConcertWin.ui);
+                QueryConcertController queryConcertController = (QueryConcertController) queryConcertWin.controller;
+                queryConcertController.setMainGUIController(this);
                 break;
             case "CreateConcert":
                 mainWrapper.setCenter(createConcertWin.ui);
+                CreateConcertController createConcertController = (CreateConcertController) createConcertWin.controller;
+                createConcertController.setMainGUIController(this);
                 break;
             case "SignUp":
                 mainWrapper.setCenter(signUpWin.ui);
+                SignUpController signUpController = (SignUpController) signUpWin.controller;
+                signUpController.setMainGUIController(this);
                 break;
             case "LogIn":
                 mainWrapper.setCenter(logInWin.ui);
+                LogInController logInController = (LogInController) logInWin.controller;
+                logInController.setMainGUIController(this);
                 break;
             case "QueryPurchase":
                 mainWrapper.setCenter(queryPurchaseWin.ui);
+                QueryPurchaseController queryPurchaseController = (QueryPurchaseController) queryPurchaseWin.controller;
+                queryPurchaseController.setMainGUIController(this);
                 break;
             default:
                 break;

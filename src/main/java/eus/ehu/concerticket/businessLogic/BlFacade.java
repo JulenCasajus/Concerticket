@@ -51,7 +51,7 @@ public interface BlFacade  {
 
     boolean checkPasswords(String password, String password2);
 
-    void createConcert(Band band, Place place, Date date, float price, float discount, Integer tickets, Integer maxTickets);
+    void createConcert(Band band, Place place, Date date, Integer maxTickets, float price, float discount);
 
     List<Concert> getConcerts(String band, String place, Date date, Integer tickets);
 

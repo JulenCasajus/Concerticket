@@ -12,7 +12,7 @@ public class LogInController implements Controller {
     public MainGUIController controller;
     public BlFacade businessLogic;
     @FXML
-    private Label done;
+    private Label lblError;
     @FXML
     private PasswordField passwordField;
     @FXML
@@ -23,7 +23,12 @@ public class LogInController implements Controller {
     private TextField userField;
 
     public LogInController(BlFacade bl) {
-        this.controller = new MainGUIController(bl);
+        businessLogic = bl;
+        this.controller = new MainGUIController(businessLogic);
+    }
+
+    public void setMainGUIController(MainGUIController mainGUIController) {
+        this.controller = mainGUIController;
     }
 
     public void initialize() {
@@ -53,7 +58,7 @@ public class LogInController implements Controller {
             controller.showScene("CreateRide");
             controller.hideLogInButton(true);
             buyVisible(false);
-            done.setText("");
+            lblError.setText("");
         } else if (businessLogic.isStaff(user,password)) {
             businessLogic.setCurrentStaff(user, password);
             controller.setUsername(businessLogic.getCurrentStaff().getUsername());
@@ -62,13 +67,14 @@ public class LogInController implements Controller {
             controller.setAbleCreateConcertBtn(true);
             controller.setAbleQueryPurchaseBtn(true);
             buyVisible(true);
-            done.setText("");
+            lblError.setText("");
         } else {
-            done.setText("Error");
+            lblError.setText("ERROR: LogIn failed");
         }
         passwordField.setText("");
         userField.setText("");
     }
+
     @FXML
     void signUpClick() {
         System.out.println("SignUp");

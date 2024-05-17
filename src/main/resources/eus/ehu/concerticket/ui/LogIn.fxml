@@ -22,7 +22,7 @@
          <Cursor fx:constant="HAND" />
       </cursor>
    </Button>
-   <Label fx:id="done" alignment="CENTER" layoutX="315.0" layoutY="350.0" prefHeight="32.0" prefWidth="250.0" textAlignment="RIGHT">
+   <Label fx:id="lblError" alignment="CENTER" layoutX="315.0" layoutY="350.0" prefHeight="32.0" prefWidth="250.0" textAlignment="RIGHT" style="-fx-text-fill: red;">
       <font>
          <Font size="26.0" />
       </font>

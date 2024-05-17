@@ -25,13 +25,17 @@ public class SignUpController implements Controller {
     @FXML
     private Button logInButton;
     @FXML
-    private Label successful;
+    private Label lblError;
 
     String username, password, password2, email, staffCode;
 
     public SignUpController(BlFacade bl) {
         businessLogic = bl;
         this.controller = new MainGUIController(businessLogic);
+    }
+
+    public void setMainGUIController(MainGUIController mainGUIController) {
+        this.controller = mainGUIController;
     }
 
     public void initialize() {
@@ -64,32 +68,46 @@ public class SignUpController implements Controller {
         password = passwordField.getText();
         password2 = passwordField.getText();
         staffCode = staffCodeField.getText();
-
-        if(businessLogic.checkCredentials(username, email)) { //Username's and email's format correct
-            if(businessLogic.checkPasswords(password, password2)) { //Password and password2 match
-                if(!businessLogic.exists(username, email)) { //Account does not exist already
-                    if (staff.isSelected() && staffCode.equals("STAFFCODE")) {
-                        if (!businessLogic.createStaff(email, username, password)) {
-                            successful.setText("Staff creation failed");
-                        }
-                        System.out.println("Staff created successfully");
-                    } else {
-                        if (!businessLogic.createClient(email, username, password)) {
-                            successful.setText("Client creation failed");
-                        }
-                        System.out.println("Client created successfully");
-                    }
-                    this.setAllEmpty();
-                    successful.setText("");
-                    controller.showScene("LogIn");
-                } else { //Account exists already
-                    successful.setText("Error: User already exists");
-                }
-            } else { //Password and password2 do not match
-                successful.setText("Error: Passwords do not match or are empty");
+        try {
+            // Check if any required fields are null
+            if (username.isEmpty() || email.isEmpty() || password.isEmpty() || password2.isEmpty()) {
+                throw new NullPointerException("Please fill in all the fields");
             }
-        } else { //Username's and email's format incorrect
-            successful.setText("Error: Username or email not valid");
+            // Check if username and email formats are correct
+            else if (!businessLogic.checkCredentials(username, email)) {
+                throw new IllegalArgumentException("Username or email not valid");
+            }
+            // Check if passwords match
+            else if (!businessLogic.checkPasswords(password, password2)) {
+                throw new IllegalArgumentException("Passwords do not match or are empty");
+            }
+            // Check if the account already exists
+            else if (businessLogic.exists(username, email)) {
+                throw new IllegalArgumentException("User already exists");
+            }
+            // Check if staff checkbox is selected and staff code is valid
+            else if (staff.isSelected() && !staffCode.equals("STAFFCODE")) {
+                throw new IllegalArgumentException("Invalid staff code");
+            }
+            // Create staff or client account based on selection
+            else if (staff.isSelected()) {
+                if (!businessLogic.createStaff(email, username, password)) {
+                    lblError.setText("Staff creation failed");
+                } else {
+                    System.out.println("Staff created successfully");
+                }
+            } else {
+                if (!businessLogic.createClient(email, username, password)) {
+                    lblError.setText("Client creation failed");
+                } else {
+                    System.out.println("Client created successfully");
+                }
+            }
+            this.setAllEmpty();
+            lblError.setText("");
+            controller.showScene("LogIn");
+        } catch (NullPointerException | IllegalArgumentException e) {
+            lblError.setText("ERROR: " + e.getMessage());
         }
     }
 

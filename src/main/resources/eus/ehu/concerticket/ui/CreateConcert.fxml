@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="500.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.concerticket.uicontrollers.CreateConcertController">
-   <Label layoutX="384.0" layoutY="50.0" prefHeight="32.0" text="%CreateConcert" textAlignment="CENTER">
+   <Label layoutX="366.0" layoutY="50.0" prefHeight="32.0" text="%CreateConcert" textAlignment="CENTER">
       <font>
          <Font size="24.0" />
       </font>
@@ -17,10 +17,13 @@
    <ComboBox fx:id="comboBand" editable="true" layoutX="315.0" layoutY="100.0" prefHeight="32.0" prefWidth="250.0" promptText="%Band" />
    <ComboBox fx:id="comboPlace" editable="true" layoutX="315.0" layoutY="150.0" prefHeight="32.0" prefWidth="250.0" promptText="%Place" />
    <DatePicker fx:id="datePicker" editable="false" layoutX="315.0" layoutY="200.0" prefHeight="32.0" prefWidth="250.0" promptText="%Date" />
-   <TextField fx:id="txtNumberOfTickets" layoutX="315.0" layoutY="250.0" prefHeight="32.0" prefWidth="75.0" promptText="%NumberOf" />
-   <Label alignment="CENTER" layoutX="375.0" layoutY="250.0" prefHeight="32.0" prefWidth="75.0" text="%Tickets" />
-   <TextField fx:id="txtPrice" layoutX="475.0" layoutY="250.0" prefHeight="32.0" prefWidth="75.0" promptText="%Price" />
-   <Label alignment="CENTER" layoutX="555.0" layoutY="250.0" prefHeight="32.0" text="€" />
-   <Button fx:id="btnCreateConcert" layoutX="315.0" layoutY="300.0" mnemonicParsing="false" onAction="#createConcertClick" prefHeight="32.0" prefWidth="250.0" text="%CreateConcert" textAlignment="CENTER" />
-   <Label fx:id="lblError" alignment="CENTER" layoutX="315.0" layoutY="350.0" prefHeight="32.0" prefWidth="250.0" />
+   <TextField fx:id="txtNumberOfTickets" layoutX="315.0" layoutY="250.0" prefHeight="32.0" prefWidth="200.0" promptText="%MaxNumberOfTickets" />
+   <Label alignment="CENTER" layoutX="520.0" layoutY="250.0" prefHeight="32.0" text="%Tickets" />
+   <TextField fx:id="txtPrice" layoutX="315.0" layoutY="300.0" prefHeight="32.0" prefWidth="100.0" promptText="%Price" />
+   <Label alignment="CENTER" layoutX="415.0" layoutY="300.0" prefHeight="32.0" text="€" />
+   <TextField fx:id="txtDiscount" layoutX="455.0" layoutY="300.0" prefHeight="32.0" prefWidth="100.0" promptText="%Discount" />
+   <Label alignment="CENTER" layoutX="554.0" layoutY="300.0" prefHeight="32.0" text="\%" />
+   <Button fx:id="btnCreateConcert" layoutX="315.0" layoutY="350.0" mnemonicParsing="false" onAction="#createConcertClick" prefHeight="32.0" prefWidth="250.0" text="%CreateConcert" textAlignment="CENTER" />
+   <Label fx:id="lblError" alignment="CENTER" layoutX="315.0" layoutY="400.0" prefHeight="32.0" prefWidth="250.0" style="-fx-text-fill: red;" />
+   <Label fx:id="lblSuccess" alignment="CENTER" layoutX="315.0" layoutY="400.0" prefHeight="32.0" prefWidth="250.0" style="-fx-text-fill: green;" />
 </AnchorPane>

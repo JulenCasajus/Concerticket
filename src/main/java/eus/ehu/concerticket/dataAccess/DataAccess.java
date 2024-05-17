@@ -11,11 +11,11 @@ import jakarta.persistence.TypedQuery;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Vector;
-import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.time.Month;
+
+import java.time.ZoneId;
+import java.util.*;
 
 /**
  * Implements the Data Access utility to the objectDb database
@@ -78,45 +78,96 @@ public class DataAccess {
 
   private void generateTestingData() {
     Calendar calendar = Calendar.getInstance();
-    calendar.set(2024, Calendar.MAY, 22, 0, 0, 0);
-    Date date = calendar.getTime();
+
+// Define dates using LocalDateTime with desired precision
+    LocalDateTime dateTime1 = LocalDateTime.of(2024, Month.MAY, 21, 0, 0, 0);
+    LocalDateTime dateTime2 = LocalDateTime.of(2024, Month.MAY, 22, 0, 0, 0);
+    LocalDateTime dateTime3 = LocalDateTime.of(2024, Month.MAY, 23, 0, 0, 0);
+    LocalDateTime dateTime4 = LocalDateTime.of(2024, Month.MAY, 24, 0, 0, 0);
+    LocalDateTime dateTime5 = LocalDateTime.of(2024, Month.MAY, 25, 0, 0, 0);
+
+// Convert LocalDateTime to Date
+    Date date1 = Date.from(dateTime1.atZone(ZoneId.systemDefault()).toInstant());
+    Date date2 = Date.from(dateTime2.atZone(ZoneId.systemDefault()).toInstant());
+    Date date3 = Date.from(dateTime3.atZone(ZoneId.systemDefault()).toInstant());
+    Date date4 = Date.from(dateTime4.atZone(ZoneId.systemDefault()).toInstant());
+    Date date5 = Date.from(dateTime5.atZone(ZoneId.systemDefault()).toInstant());
+
 
     // Create and persist sample bands
-    Band band1 = new Band("B1", 2000, "A");
-    db.persist(band1);
-
-    Band band2 = new Band("B2", 2010, "J");
-    db.persist(band2);
+    Band arcticMonkeys = new Band("Arctic Monkeys", 2002, "Alex Turner");
+    db.persist(arcticMonkeys);
+    Band beatles = new Band("The Beatles", 1960, "John Lennon");
+    db.persist(beatles);
+    Band rollingStones = new Band("The Rolling Stones", 1962, "Mick Jagger");
+    db.persist(rollingStones);
+    Band queen = new Band("Queen", 1970, "Freddie Mercury");
+    db.persist(queen);
+    Band ledZeppelin = new Band("Led Zeppelin", 1968, "Robert Plant");
+    db.persist(ledZeppelin);
 
     // Create and persist sample places
-    Place place1 = new Place("P1", 100, 10);
-    db.persist(place1);
-
-    Place place2 = new Place("P2", 100, 10);
-    db.persist(place2);
+    Place wembleyStadium = new Place("Wembley Stadium", 90000, 9);
+    db.persist(wembleyStadium);
+    Place madisonSquareGarden = new Place("Madison Square Garden", 20000, 9);
+    db.persist(madisonSquareGarden);
+    Place gelredome = new Place("Gelredome", 41000, 9);
+    db.persist(gelredome);
+    Place maracanaStadium = new Place("Maracanã Stadium", 78000, 9);
+    db.persist(maracanaStadium);
+    Place roseBowlStadium = new Place("Rose Bowl Stadium", 90000, 9);
+    db.persist(roseBowlStadium);
 
     // Create and persist sample concerts
-    Concert concert1 = new Concert(band1, place1, date, 50, 0, 100, 10);
-    db.persist(concert1);
-
-    Concert concert2 = new Concert(band2, place2, date, 60, 0, 100, 10);
-    db.persist(concert2);
+    Concert concert6 = new Concert(arcticMonkeys, madisonSquareGarden, date2, 6, 45, 0);
+    db.persist(concert6);
+    Concert concert7 = new Concert(beatles, gelredome, date3, 4, 55, 0);
+    db.persist(concert7);
+    Concert concert8 = new Concert(rollingStones, maracanaStadium, date4, 1, 65, 0);
+    db.persist(concert8);
+    Concert concert9 = new Concert(queen, roseBowlStadium, date5, 9, 70, 0);
+    db.persist(concert9);
+    Concert concert10 = new Concert(ledZeppelin, wembleyStadium, date1, 2, 50, 0);
+    db.persist(concert10);
+    Concert concert11 = new Concert(arcticMonkeys, gelredome, date3, 7, 60, 0);
+    db.persist(concert11);
+    Concert concert12 = new Concert(beatles, maracanaStadium, date4, 3, 70, 0);
+    db.persist(concert12);
+    Concert concert13 = new Concert(rollingStones, roseBowlStadium, date5, 8, 40, 0);
+    db.persist(concert13);
+    Concert concert14 = new Concert(queen, wembleyStadium, date1, 5, 55, 0);
+    db.persist(concert14);
+    Concert concert15 = new Concert(ledZeppelin, madisonSquareGarden, date2, 6, 65, 0);
+    db.persist(concert15);
+    Concert concert16 = new Concert(arcticMonkeys, maracanaStadium, date4, 1, 45, 0);
+    db.persist(concert16);
+    Concert concert17 = new Concert(beatles, roseBowlStadium, date5, 9, 55, 0);
+    db.persist(concert17);
+    Concert concert18 = new Concert(rollingStones, wembleyStadium, date1, 4, 70, 0);
+    db.persist(concert18);
+    Concert concert19 = new Concert(queen, madisonSquareGarden, date2, 2, 40, 0);
+    db.persist(concert19);
+    Concert concert20 = new Concert(ledZeppelin, gelredome, date3, 7, 50, 0);
+    db.persist(concert20);
+    Concert concert21 = new Concert(arcticMonkeys, roseBowlStadium, date5, 3, 60, 0);
+    db.persist(concert21);
+    Concert concert22 = new Concert(beatles, wembleyStadium, date1, 8, 65, 0);
+    db.persist(concert22);
+    Concert concert23 = new Concert(rollingStones, madisonSquareGarden, date2, 5, 45, 0);
+    db.persist(concert23);
+    Concert concert24 = new Concert(queen, gelredome, date3, 1, 70, 0);
+    db.persist(concert24);
+    Concert concert25 = new Concert(ledZeppelin, maracanaStadium, date4, 9, 55, 0);
+    db.persist(concert25);
 
     // Create and persist sample clients
-    User client1 = new User("b1", "b1@", "b1");
+    User client1 = new User("a", "a@", "a");
     db.persist(client1);
 
-    User client2 = new User("b2", "b2@", "b2");
-    db.persist(client2);
-
     // Create and persist sample staff members
-    User staff1 = new User("a1", "a1@", "a1");
+    User staff1 = new User("b", "b@", "b");
     db.persist(staff1);
-
-    User staff2 = new User("a2", "a2@", "a2");
-    db.persist(staff2);
   }
-
 
   public List<Purchase> getPurchases(Client client) {
       TypedQuery<Purchase> query = db.createQuery("SELECT p FROM Purchase p WHERE p.user = :client", Purchase.class);
@@ -140,8 +191,8 @@ public class DataAccess {
     return password.equals(password2) && !password.isEmpty();
   }
 
-  public void createConcert(Band band, Place place, Date date, float price, float discount, Integer tickets, Integer maxTickets) {
-    System.out.println(">> DataAccess: createConcert => band=" + band.getName() + ", place=" + place.getName() + ", date=" + date + ", price" + price + ", discount=" + discount + ", tickets=" + tickets + ", maxtickets=" + maxTickets);
+  public void createConcert(Band band, Place place, Date date, Integer maxTickets, float price, float discount) {
+    System.out.println(">> DataAccess: createConcert => band=" + band.getName() + ", place=" + place.getName() + ", date=" + date + ", maxTickets/User=" + maxTickets + ", price" + price + ", discount=" + discount);
     try {
       db.getTransaction().begin();
 
@@ -151,13 +202,14 @@ public class DataAccess {
       }
 
       // Check if the concert already exists
-      Concert concert = db.find(Concert.class, date);
-      if (concert != null) {
+      List<Concert> concerts = getConcerts(band.getName(), place.getName(), date, maxTickets);
+
+      if (!concerts.isEmpty()) {
         throw new ConcertAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.RideAlreadyExist"));
       }
 
       // Create and persist the concert
-      concert = new Concert(band, place, date, price, discount, tickets, maxTickets);
+      Concert concert = new Concert(band, place, date, maxTickets, price, discount);
       db.persist(concert);
 
       db.getTransaction().commit();
@@ -175,12 +227,30 @@ public class DataAccess {
   public List<Concert> getConcerts(String band, String place, Date date, Integer tickets) {
     System.out.println(">> DataAccess: getConcerts group/place/date");
 
-    TypedQuery<Concert> query = db.createQuery("SELECT c FROM Concert c "
-            + "WHERE c.band.name=?1 and c.place.name=?2 and c.date=?3 and c.tickets=?4", Concert.class);
-    query.setParameter(1, band);
-    query.setParameter(2, place);
-    query.setParameter(3, date);
-    query.setParameter(4, tickets);
+    StringBuilder queryString = new StringBuilder("SELECT c FROM Concert c WHERE c.maxTickets > :tickets AND c.place.maxTickets > :tickets");
+
+    if (band != null) {
+      queryString.append(" AND c.band.name = :band");
+    }
+    if (place != null) {
+      queryString.append(" AND c.place.name = :place");
+    }
+    if (date != null) {
+      queryString.append(" AND c.date = :date");
+    }
+
+    TypedQuery<Concert> query = db.createQuery(queryString.toString(), Concert.class);
+
+    if (band != null) {
+      query.setParameter("band", band);
+    }
+    if (place != null) {
+      query.setParameter("place", place);
+    }
+    if (date != null) {
+      query.setParameter("date", date);
+    }
+    query.setParameter("tickets", tickets);
 
     List<Concert> concerts = query.getResultList();
     return new Vector<>(concerts);
@@ -307,7 +377,6 @@ public class DataAccess {
     }
   }
 
-
   /**
    * This method returns all the places with concerts
    *
@@ -337,11 +406,22 @@ public class DataAccess {
 
   public List<Date> getDatesConcert(String band, String place, Integer tickets) {
     System.out.println(">> DataAccess: getDatesConcert");
-    TypedQuery<Date> query = db.createQuery("SELECT DISTINCT c.date FROM Concert c WHERE c.band.name=?1 AND c.place.name=?2 AND c.maxTickets >?3 AND c.maxTickets >=?4", Date.class);
-    query.setParameter(1, band);
-    query.setParameter(2, place);
-    query.setParameter(3, 0);
-    query.setParameter(4, tickets);
+    StringBuilder queryString = new StringBuilder("SELECT c.date FROM Concert c WHERE c.tickets > 0 AND c.tickets >= :tickets");
+
+    if (band != null) {
+      queryString.append(" AND c.band.name = :band");
+    } if (place != null) {
+      queryString.append(" AND c.place.name = :place");
+    }
+
+    TypedQuery<Date> query = db.createQuery(queryString.toString(), Date.class);
+
+    if (band != null) {
+      query.setParameter("band", band);
+    } if (place != null) {
+      query.setParameter("place", place);
+    } query.setParameter("tickets", tickets);
+
     return query.getResultList();
   }
 }

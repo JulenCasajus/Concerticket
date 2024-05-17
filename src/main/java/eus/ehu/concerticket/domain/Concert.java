@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -28,10 +29,10 @@ public class Concert implements Serializable {
         super();
     }
 
-    public Concert(Band band, Place place, Date date, float price, float discount, Integer tickets, Integer maxTickets) {
+    public Concert(Band band, Place place, Date date, Integer maxTickets, float price, float discount) {
         super();
         this.date = date;
-        this.tickets = tickets;
+        this.tickets = place.getMaxCapacity();
         this.price = price;
         this.maxTickets = maxTickets;
         this.discount = discount;
@@ -71,6 +72,14 @@ public class Concert implements Serializable {
         this.price = price;
     }
 
+    public Integer getMaxTickets() {
+        return maxTickets;
+    }
+
+    public void setMaxTickets(Integer maxTickets) {
+        this.maxTickets = maxTickets;
+    }
+
     public Place getPlace() {
         return place;
     }
@@ -79,16 +88,24 @@ public class Concert implements Serializable {
         this.place = place;
     }
 
-    public String getDateWithoutHours(Date date) {
-        String[] dateParts = date.toString().split(" ");
-        return dateParts[0];
+    public float getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(float discount) {
+        this.discount = discount;
+    }
+
+    public String getDateString(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        return sdf.format(date);
     }
 
     public String toString() {
-        return  band + " | " + place + " | " + getDateWithoutHours(date);
+        return  band.getName() + " | " + place.getName() + " | " + getDateString(date);
     }
 
     public String toString2() {
-        return  band + " | " + place;
+        return  band.getName() + " | " + place.getName();
     }
 }

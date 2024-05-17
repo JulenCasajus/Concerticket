@@ -3,18 +3,13 @@ package eus.ehu.concerticket.uicontrollers;
 import eus.ehu.concerticket.businessLogic.BlFacade;
 import eus.ehu.concerticket.domain.Band;
 import eus.ehu.concerticket.domain.Place;
-import eus.ehu.concerticket.exceptions.ConcertAlreadyExistException;
-import eus.ehu.concerticket.exceptions.ConcertMustBeLaterThanTodayException;
 import eus.ehu.concerticket.utils.Dates;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.util.Callback;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.ResourceBundle;
 
 public class CreateConcertController implements Controller {
     BlFacade businessLogic;
@@ -29,14 +24,23 @@ public class CreateConcertController implements Controller {
     @FXML
     private TextField txtPrice;
     @FXML
+    private TextField txtDiscount;
+    @FXML
     private Button btnCreateConcert;
     @FXML
     private Label lblError;
-
+    @FXML
+    private Label lblSuccess;
+    private MainGUIController controller;
 
 
     public CreateConcertController(BlFacade bl) {
         businessLogic = bl;
+        this.controller = new MainGUIController(businessLogic);
+    }
+
+    public void setMainGUIController(MainGUIController mainGUIController) {
+        this.controller = mainGUIController;
     }
 
     @FXML
@@ -51,81 +55,36 @@ public class CreateConcertController implements Controller {
 
         comboBand.setItems(bands);
         comboPlace.setItems(places);
-
-        datePicker.setDayCellFactory(new Callback<>() {
-            @Override
-            public DateCell call(DatePicker param) {
-                return new DateCell() {
-                    @Override
-                    public void updateItem(LocalDate item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (!empty && item != null) {
-                            this.setStyle("-fx-background-color: pink");
-                        }
-                    }
-                };
-            }
-        });
     }
 
     @FXML
     void createConcertClick() {
-
-        clearErrorLabels();
-
-        String bandName = comboBand.getEditor().getText();
-        String placeName = comboPlace.getEditor().getText();
-
-        Band band = businessLogic.getBand(bandName);
-        Place place = businessLogic.getPlace(placeName);
-        String errors = field_Errors();
-
-        if (errors != null) {
-            displayMessage(errors, "danger");
-        } else {
-            int tickets = Integer.parseInt(txtNumberOfTickets.getText());
-            float price = Float.parseFloat(txtPrice.getText());
-            businessLogic.createConcert( band, place, Dates.convertToDate(datePicker.getValue()), price, 0, tickets, 0);
-            displayMessage(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.RideCreated"), "success");
-        }
-    }
-
-    private void clearErrorLabels() {
-        lblError.setText("");
-        lblError.getStyleClass().clear();
-    }
-
-    private String field_Errors() {
         try {
-            if ((comboBand.getEditor().getText().isEmpty()) || (comboPlace.getEditor().getText().isEmpty()) || (txtNumberOfTickets.getText().isEmpty()) || (txtPrice.getText().isEmpty()))
-                return ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorQuery");
-            else {
+            String bandName = comboBand.getValue();
+            String placeName = comboPlace.getValue();
+            Band band = businessLogic.getBand(bandName);
+            Place place = businessLogic.getPlace(placeName);
+            LocalDate date = datePicker.getValue();
 
-                // trigger an exception if the introduced string is not a number
-                int inputSeats = Integer.parseInt(txtNumberOfTickets.getText());
-
-                if (inputSeats <= 0) {
-                    return ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.SeatsMustBeGreaterThan0");
-                } else {
-                    float price = Float.parseFloat(txtPrice.getText());
-                    if (price <= 0)
-                        return ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.PriceMustBeGreaterThan0");
-                    else
-                        return null;
-                }
+            if (bandName == null || placeName == null || date == null || txtNumberOfTickets.getText() == null || txtPrice.getText() == null) {
+                throw new NullPointerException("ERROR: Please fill in all the fields");
             }
-        } catch (NumberFormatException e1) {
-            return ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorNumber");
-        } catch (Exception e1) {
-            e1.printStackTrace();
-            return null;
-        }
-    }
+            int maxTickets = Integer.parseInt(txtNumberOfTickets.getText());
+            float price = Float.parseFloat(txtPrice.getText());
+            float discount = Float.parseFloat(txtDiscount.getText());
+            businessLogic.createConcert(band, place, Dates.convertToDate(date), maxTickets, price, discount);
 
-    void displayMessage(String message, String label){
-        lblError.getStyleClass().clear();
-        lblError.getStyleClass().setAll("lbl", "lbl-"+label);
-        lblError.setText(message);
+            lblError.setText("");
+            lblSuccess.setText("Concert created successfully");
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+            lblError.setText("ERROR: Please fill in all the fields");
+            lblSuccess.setText("");
+        } catch (NumberFormatException e) {
+            System.out.println("ERROR: Invalid numbers for tickets and price");
+            lblError.setText("ERROR: Invalid numbers for tickets and price");
+            lblSuccess.setText("");
+        }
     }
 
     @Override

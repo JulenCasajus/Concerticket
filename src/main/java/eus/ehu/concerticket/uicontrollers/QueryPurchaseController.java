@@ -26,9 +26,15 @@ public class QueryPurchaseController implements Controller{
     @FXML
     private TableView<Purchase> tablePurchases;
     private final BlFacade businessLogic;
+    private MainGUIController controller;
 
     public QueryPurchaseController(BlFacade bl) {
-         businessLogic = bl;
+        businessLogic = bl;
+        this.controller = new MainGUIController(businessLogic);
+    }
+
+    public void setMainGUIController(MainGUIController mainGUIController) {
+        this.controller = mainGUIController;
     }
 
     @FXML
