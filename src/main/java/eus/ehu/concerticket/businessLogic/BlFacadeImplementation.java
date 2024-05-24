@@ -4,8 +4,6 @@ import eus.ehu.concerticket.configuration.Config;
 import eus.ehu.concerticket.dataAccess.DataAccess;
 import eus.ehu.concerticket.domain.*;
 import eus.ehu.concerticket.utils.Dates;
-import eus.ehu.concerticket.exceptions.ConcertAlreadyExistException;
-import eus.ehu.concerticket.exceptions.ConcertMustBeLaterThanTodayException;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.util.Callback;
@@ -21,8 +19,7 @@ public class BlFacadeImplementation implements BlFacade {
 
     DataAccess dbManager;
     Config config = Config.getInstance();
-    private Client currentClient;
-    private Staff currentStaff;
+    private User currentUser;
     private final List<LocalDate> datesWithConcert = new ArrayList<>();
 
     public BlFacadeImplementation() {
@@ -34,8 +31,7 @@ public class BlFacadeImplementation implements BlFacade {
 
     @Override
     public void setUserNull() {
-        this.currentClient = null;
-        this.currentStaff = null;
+        this.currentUser = null;
     }
 
     public List<String> getBands() {
@@ -54,12 +50,12 @@ public class BlFacadeImplementation implements BlFacade {
         return dbManager.getPlace(name);
     }
 
-    public List<Date> getDatesConcert(String concert, String place, Integer tickets) {
+    public List<Date> getDatesConcert(String concert, String place, int tickets) {
         return dbManager.getDatesConcert(concert, place, tickets);
     }
 
-    public List<Purchase> getPurchases(Client client) {
-        return dbManager.getPurchases(client);
+    public List<Purchase> getPurchases(User user) {
+        return dbManager.getPurchases(user);
     }
 
     @Override
@@ -67,53 +63,43 @@ public class BlFacadeImplementation implements BlFacade {
         return dbManager.exists(username, email);
     }
 
-    public boolean createStaff(String username, String email, String password) {
-        return dbManager.createStaff( username, email, password);
+    @Override
+    public boolean exists(String user) {
+        return dbManager.exists(user);
     }
 
-    public boolean isStaff(String user, String password) {
-        return dbManager.isStaff(user, password);
+    public boolean isUser(String user, String password) {
+        return dbManager.isUser(user, password);
     }
 
-    public Staff getCurrentStaff() {
-        return this.currentStaff;
+    public User getCurrentUser() {
+        return this.currentUser;
     }
 
-    public void setCurrentStaff(String username, String password) {
-        this.currentStaff = dbManager.setCurrentStaff(username, password);
+    public void setCurrentUser(String username,String password) {
+        this.currentUser = dbManager.getCurrentUser(username, password);
     }
 
-    public boolean createClient(String username, String email, String password) {
-        return dbManager.createClient(username, email, password);
-    }
-
-    public boolean isClient(String user, String password) {
-        return dbManager.isClient(user, password);
-    }
-
-    public Client getCurrentClient() {
-        return this.currentClient;
-    }
-
-    public void setCurrentClient(String username,String password) {
-        this.currentClient = dbManager.setCurrentClient(username, password);
+    public boolean createUser(String username, String email, String password, boolean staff) {
+        return dbManager.createUser(username, email, password, staff);
     }
 
     @Override
     public boolean checkCredentials(String username, String email) {
-        return dbManager.checkCredentials(username, email);
+        return !username.contains("@") && email.contains("@");
     }
 
     @Override
     public boolean checkPasswords(String password, String password2) {
-        return dbManager.checkPasswords(password, password2);
+            return password.equals(password2);
     }
+
     @Override
-    public void createConcert(Band band, Place place, Date date, Integer maxTickets, float price, float discount) {
+    public void createConcert(Band band, Place place, Date date, int maxTickets, float price, float discount) {
         dbManager.createConcert(band, place, date, maxTickets, price, discount);
     }
 
-    public List<Concert> getConcerts(String band, String place, Date date, Integer tickets) {
+    public List<Concert> getConcerts(String band, String place, Date date, int tickets) {
         return dbManager.getConcerts(band, place, date, tickets);
     }
 
@@ -121,7 +107,8 @@ public class BlFacadeImplementation implements BlFacade {
         dbManager.setConcert(concert);
     }
 
-    public void purchaseConcert(Client client, Concert concert, Integer tickets) {
+    public void purchaseConcert(User user, Concert concert, int tickets, float price) {
+        dbManager.purchaseConcert(user, concert, tickets, price);
     }
 
     public void updateDatePickerCellFactory(DatePicker datePicker, String band, String place, int tickets) {

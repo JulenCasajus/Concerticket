@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -44,6 +45,8 @@ public class QueryConcertController implements Controller {
     private Label buyTxt;
     @FXML
     private Label lblMessage;
+    @FXML
+    private Label lblDiscounts;
     @FXML
     private TableView<Concert> tblConcerts;
     BlFacade businessLogic;
@@ -104,11 +107,11 @@ public class QueryConcertController implements Controller {
 
         qc1.setCellValueFactory(cellData -> {
             Concert concert = cellData.getValue();
-            return new SimpleStringProperty(concert != null ? concert.getBand().getName() : "<no name>");
+            return new SimpleStringProperty(concert != null ? concert.getBand().getName() : "<no band>");
         });
         qc2.setCellValueFactory(cellData -> {
             Concert concert = cellData.getValue();
-            return new SimpleStringProperty(concert != null ? concert.getPlace().getName() : "<no name>");
+            return new SimpleStringProperty(concert != null ? concert.getPlace().getName() : "<no place>");
         });
         qc3.setCellValueFactory(cellData -> {
             Concert concert = cellData.getValue();
@@ -126,38 +129,79 @@ public class QueryConcertController implements Controller {
         });
         qc6.setCellValueFactory(cellData -> {
             Concert concert = cellData.getValue();
-            return new SimpleStringProperty(concert != null ? concert.getDiscount() + "%" : "<no price>");
+            float discount = concert.getDiscount();
+            LocalDate thirtyDaysAfterToday = LocalDate.now().plusDays(30);
+            LocalDate concertDate = concert.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            if (!concertDate.isAfter(thirtyDaysAfterToday)) {
+                discount = 0;
+            }
+            return new SimpleStringProperty(discount + "%");
         });
 
         tblConcerts.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->
-                btnBuy.setDisable(newSelection == null || businessLogic.getCurrentClient() == null));
+                btnBuy.setDisable(newSelection == null || businessLogic.getCurrentUser() == null || comboTickets.getValue() == null)); //CAMBIAR A getCurrentClient???
+
+        comboBand.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                comboBand.show();
+                event.consume();
+            }
+        });
+        comboPlace.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                comboPlace.show();
+                event.consume();
+            }
+        });
+        comboTickets.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                comboTickets.show();
+                event.consume();
+            }
+        });
+        clearBtn.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                clearQuery();
+                event.consume();
+            }
+        });
+        datePicker.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                datePicker.show();
+                event.consume();
+            }
+        });
     }
 
     @FXML
     private void buyButton() {
         Concert concert = tblConcerts.getSelectionModel().getSelectedItem();
         int tickets = comboTickets.getSelectionModel().getSelectedItem();
-        businessLogic.purchaseConcert(businessLogic.getCurrentClient(), concert, tickets);
-        tblConcerts.getItems().clear();
-        List<Concert> concerts = businessLogic.getConcerts(comboBand.getValue(), comboPlace.getValue(), Date.from(datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()), comboTickets.getValue());
-        for (Concert concert1 : concerts) {
-            tblConcerts.getItems().add(concert1);
+        float price = concert.getPrice();
+        LocalDate thirtyDaysAfterToday = LocalDate.now().plusDays(30);
+        LocalDate concertDate = concert.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        if (concertDate.isAfter(thirtyDaysAfterToday)) {
+            price = price * (100 - concert.getDiscount()) / 100;
         }
         btnBuy.setDisable(true);
+        businessLogic.purchaseConcert(businessLogic.getCurrentUser(), concert, tickets, price);
+        if(tickets == 1) lblMessage.setText(tickets + " ticket bought for " + price + "€!");
+        else lblMessage.setText(tickets + " tickets bought for " + price + "€ each!");
     }
 
-    @FXML
     public void updateTable() {
         tblConcerts.getItems().clear();
         String band = comboBand.getValue() != null ? comboBand.getValue() : null;
         String place = comboPlace.getValue() != null ? comboPlace.getValue() : null;
         LocalDate dateValue = datePicker.getValue() != null ? datePicker.getValue() : null;
         Date date = dateValue != null ? Date.from(dateValue.atStartOfDay(ZoneId.systemDefault()).toInstant()) : null;
-        Integer tickets = comboTickets.getValue() != null ? comboTickets.getValue() : 0;
-
-        List<Concert> concerts = businessLogic.getConcerts(band, place, date, tickets);
-        System.out.println(concerts.toString());
-        tblConcerts.getItems().addAll(concerts);
+        int tickets = comboTickets.getValue() != null ? comboTickets.getValue() : 0;
+        List<Concert> concerts;
+        if(band != null || place != null || dateValue != null || tickets != 0) {
+            concerts = businessLogic.getConcerts(band, place, date, tickets);
+            System.out.println(concerts.toString());
+            tblConcerts.getItems().addAll(concerts);
+        }
     }
 
     @FXML
@@ -165,16 +209,19 @@ public class QueryConcertController implements Controller {
         setNull();
     }
 
+    public void clear() {
+        lblMessage.setText("");
+    }
+
+    @Override
+    public void signUpSuccessful() {
+    }
+
     public void setNull() {
-        ResourceBundle bundle = ResourceBundle.getBundle("Etiquetas_en", Locale.getDefault());
         comboBand.setValue(null);
         comboPlace.setValue(null);
         comboTickets.setValue(null);
         datePicker.setValue(null);
-        comboBand.setPromptText(bundle.getString("Band"));
-        comboPlace.setPromptText(bundle.getString("Place"));
-        comboTickets.setPromptText(bundle.getString("Tickets"));
-        datePicker.setPromptText(bundle.getString("Date"));
         businessLogic.updateDatePickerCellFactory(datePicker, null, null, 0);
         tblConcerts.getItems().clear();
     }

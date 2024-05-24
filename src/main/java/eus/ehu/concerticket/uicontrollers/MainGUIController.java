@@ -80,6 +80,7 @@ public class MainGUIController implements Controller {
         showScene("LogIn");
         buyVisible(false);
         setNull();
+        queryConcertWin.controller.setNull();
     }
 
     @FXML
@@ -97,7 +98,6 @@ public class MainGUIController implements Controller {
     @FXML
     void queryPurchaseClick() {
         System.out.println("QueryPurchase");
-        queryPurchaseWin = load("QueryPurchase.fxml");
         showScene("QueryPurchase");
     }
 
@@ -105,9 +105,10 @@ public class MainGUIController implements Controller {
     void initialize() {
         setAbleCreateConcertBtn(false);
         setAbleQueryPurchaseBtn(false);
-        queryConcertWin = load("QueryConcert.fxml");
         logInWin = load("LogIn.fxml");
         signUpWin = load("SignUp.fxml");
+        queryConcertWin = load("QueryConcert.fxml");
+        queryPurchaseWin = load("QueryPurchase.fxml");
         createConcertWin = load("CreateConcert.fxml");
         mainWrapper.setCenter(queryConcertWin.ui);
 
@@ -148,26 +149,31 @@ public class MainGUIController implements Controller {
             case "QueryConcert":
                 mainWrapper.setCenter(queryConcertWin.ui);
                 QueryConcertController queryConcertController = (QueryConcertController) queryConcertWin.controller;
+                queryConcertController.clear();
                 queryConcertController.setMainGUIController(this);
                 break;
             case "CreateConcert":
                 mainWrapper.setCenter(createConcertWin.ui);
                 CreateConcertController createConcertController = (CreateConcertController) createConcertWin.controller;
+                createConcertController.clear();
                 createConcertController.setMainGUIController(this);
                 break;
             case "SignUp":
                 mainWrapper.setCenter(signUpWin.ui);
                 SignUpController signUpController = (SignUpController) signUpWin.controller;
+                signUpController.clear();
                 signUpController.setMainGUIController(this);
                 break;
             case "LogIn":
                 mainWrapper.setCenter(logInWin.ui);
                 LogInController logInController = (LogInController) logInWin.controller;
+                logInController.clear();
                 logInController.setMainGUIController(this);
                 break;
             case "QueryPurchase":
                 mainWrapper.setCenter(queryPurchaseWin.ui);
                 QueryPurchaseController queryPurchaseController = (QueryPurchaseController) queryPurchaseWin.controller;
+                queryPurchaseController.updateTable();
                 queryPurchaseController.setMainGUIController(this);
                 break;
             default:
@@ -175,7 +181,6 @@ public class MainGUIController implements Controller {
         }
         mainWrapper.getScene().getWindow().sizeToScene();
     }
-
 
     Window load(String fxml) {
         try {
@@ -200,7 +205,7 @@ public class MainGUIController implements Controller {
     }
 
     void setAbleCreateConcertBtn(boolean able) {
-        createConcertBtn.setVisible(!able);
+        createConcertBtn.setVisible(able);
     }
 
     void setAbleQueryPurchaseBtn(boolean able) {
@@ -211,11 +216,16 @@ public class MainGUIController implements Controller {
         lblUser.setText(username);
     }
 
+    public void signUpSuccessful() {
+        logInWin.controller.signUpSuccessful();
+    }
+
     @Override
     public void setNull() {
     }
 
     @Override
     public void buyVisible(boolean b) {
+        queryConcertWin.controller.buyVisible(b);
     }
 }

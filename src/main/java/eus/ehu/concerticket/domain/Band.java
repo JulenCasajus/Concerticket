@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 @Entity
 public class Band {
-
     @Id
     private String name;
     private Integer creationYear;

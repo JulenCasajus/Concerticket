@@ -1,6 +1,7 @@
 package eus.ehu.concerticket.uicontrollers;
 
 import eus.ehu.concerticket.businessLogic.BlFacade;
+import eus.ehu.concerticket.exceptions.PasswordIncorrectException;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -66,12 +67,16 @@ public class SignUpController implements Controller {
         username = usernameField.getText();
         email = emailField.getText();
         password = passwordField.getText();
-        password2 = passwordField.getText();
+        password2 = passwordField2.getText();
         staffCode = staffCodeField.getText();
         try {
             // Check if any required fields are null
             if (username.isEmpty() || email.isEmpty() || password.isEmpty() || password2.isEmpty()) {
                 throw new NullPointerException("Please fill in all the fields");
+            }
+            // Check if the account already exists
+            else if (businessLogic.exists(username, email)) {
+                throw new IllegalArgumentException("User already exists");
             }
             // Check if username and email formats are correct
             else if (!businessLogic.checkCredentials(username, email)) {
@@ -79,35 +84,24 @@ public class SignUpController implements Controller {
             }
             // Check if passwords match
             else if (!businessLogic.checkPasswords(password, password2)) {
-                throw new IllegalArgumentException("Passwords do not match or are empty");
-            }
-            // Check if the account already exists
-            else if (businessLogic.exists(username, email)) {
-                throw new IllegalArgumentException("User already exists");
+                throw new IllegalArgumentException("Passwords do not match");
             }
             // Check if staff checkbox is selected and staff code is valid
-            else if (staff.isSelected() && !staffCode.equals("STAFFCODE")) {
+            else if (staff.isSelected() && !staffCode.equals("STAFF")) {
                 throw new IllegalArgumentException("Invalid staff code");
-            }
-            // Create staff or client account based on selection
-            else if (staff.isSelected()) {
-                if (!businessLogic.createStaff(email, username, password)) {
-                    lblError.setText("Staff creation failed");
-                } else {
-                    System.out.println("Staff created successfully");
-                }
             } else {
-                if (!businessLogic.createClient(email, username, password)) {
-                    lblError.setText("Client creation failed");
+                if (businessLogic.createUser(username, email, password, staff.isSelected())) {
+                    System.out.println("User created successfully");
+                    controller.showScene("LogIn");
+                    controller.signUpSuccessful();
                 } else {
-                    System.out.println("Client created successfully");
+                    System.out.println("ERROR: User creation failed");
+                    lblError.setText("Client creation failed");
                 }
             }
-            this.setAllEmpty();
-            lblError.setText("");
-            controller.showScene("LogIn");
         } catch (NullPointerException | IllegalArgumentException e) {
-            lblError.setText("ERROR: " + e.getMessage());
+            System.out.println("ERROR: " + e.getMessage());
+            lblError.setText(e.getMessage());
         }
     }
 
@@ -116,13 +110,18 @@ public class SignUpController implements Controller {
         staffCodeField.setDisable(!staff.isSelected());
     }
 
-    @FXML
-    public void setAllEmpty() {
+    public void clear() {
         usernameField.clear();
         passwordField.clear();
         passwordField2.clear();
         emailField.clear();
         staffCodeField.clear();
+        if(staff.isSelected()) staff.fire();
+        lblError.setText("");
+    }
+
+    @Override
+    public void signUpSuccessful() {
     }
 
     @Override

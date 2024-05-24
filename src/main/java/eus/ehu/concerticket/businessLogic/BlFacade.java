@@ -3,8 +3,6 @@ package eus.ehu.concerticket.businessLogic;
 // import eus.ehu.concerticket.domain.Hello;
 
 import eus.ehu.concerticket.domain.*;
-import eus.ehu.concerticket.exceptions.ConcertAlreadyExistException;
-import eus.ehu.concerticket.exceptions.ConcertMustBeLaterThanTodayException;
 import javafx.scene.control.DatePicker;
 
 import java.util.Date;
@@ -25,39 +23,33 @@ public interface BlFacade  {
 
     Place getPlace(String place);
 
-    List<Date> getDatesConcert(String concert, String Place, Integer tickets);
+    List<Date> getDatesConcert(String concert, String Place, int tickets);
 
-    List<Purchase> getPurchases(Client client);
+    List<Purchase> getPurchases(User user);
 
     boolean exists(String username, String email);
 
-    boolean createClient(String username, String email, String password);
+    boolean exists(String user);
 
-    boolean isClient(String user, String password);
+    boolean isUser(String user, String password);
 
-    Client getCurrentClient();
+    boolean createUser(String username, String email, String password, boolean staff);
 
-    void setCurrentClient(String username,String password);
+    User getCurrentUser();
 
-    boolean createStaff(String username, String email, String password);
-
-    boolean isStaff(String user, String password);
-
-    Staff getCurrentStaff();
-
-    void setCurrentStaff(String username, String password);
+    void setCurrentUser(String user, String password);
 
     boolean checkCredentials(String username, String email);
 
     boolean checkPasswords(String password, String password2);
 
-    void createConcert(Band band, Place place, Date date, Integer maxTickets, float price, float discount);
+    void createConcert(Band band, Place place, Date date, int maxTickets, float price, float discount);
 
-    List<Concert> getConcerts(String band, String place, Date date, Integer tickets);
+    List<Concert> getConcerts(String band, String place, Date date, int tickets);
 
     void setConcert(Concert concert);
 
-    void purchaseConcert(Client client, Concert concert, Integer tickets);
+    void purchaseConcert(User user, Concert concert, int tickets, float price);
 
     void updateDatePickerCellFactory(DatePicker datePicker, String concert, String place, int tickets);
 }

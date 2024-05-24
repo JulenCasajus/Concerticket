@@ -22,11 +22,6 @@
          <Cursor fx:constant="HAND" />
       </cursor>
    </Button>
-   <Label fx:id="lblError" alignment="CENTER" layoutX="315.0" layoutY="350.0" prefHeight="32.0" prefWidth="250.0" textAlignment="RIGHT" style="-fx-text-fill: red;">
-      <font>
-         <Font size="26.0" />
-      </font>
-   </Label>
    <Label layoutX="340.0" layoutY="300.0" prefHeight="32.0" text="Don't have an account?" textAlignment="CENTER" />
    <Button fx:id="signUpButton" blendMode="HARD_LIGHT" layoutX="478.5" layoutY="300.0" mnemonicParsing="false" onAction="#signUpClick" prefHeight="32.0" text="%SignUp" textFill="#0042ff">
       <opaqueInsets>
@@ -36,4 +31,6 @@
          <Cursor fx:constant="HAND" />
       </cursor>
    </Button>
+   <Label fx:id="lblError" alignment="CENTER" layoutX="315.0" layoutY="350.0" prefHeight="32.0" prefWidth="250.0" style="-fx-text-fill: red;" textAlignment="RIGHT" />
+   <Label fx:id="lblSuccess" alignment="CENTER" layoutX="315.0" layoutY="350.0" prefHeight="32.0" prefWidth="250.0" style="-fx-text-fill: green;" textAlignment="RIGHT" />
 </AnchorPane>

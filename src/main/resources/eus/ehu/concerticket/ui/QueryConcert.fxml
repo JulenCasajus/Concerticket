@@ -9,11 +9,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.concerticket.uicontrollers.QueryConcertController">
-    <ComboBox fx:id="comboBand" layoutX="80.0" layoutY="25.0" prefHeight="32.0" prefWidth="175.0" promptText="%Band" />
-    <ComboBox fx:id="comboPlace" layoutX="277.0" layoutY="25.0" prefHeight="32.0" prefWidth="175.0" promptText="%Place" />
-    <ComboBox fx:id="comboTickets" layoutX="474.0" layoutY="25.0" prefHeight="32.0" prefWidth="134.0" promptText="%Tickets" />
-    <DatePicker fx:id="datePicker" editable="false" layoutX="630.0" layoutY="25.0" prefHeight="32.0" prefWidth="110.0" promptText="%Date" />
-    <TableView fx:id="tblConcerts" layoutX="80.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="300.0" prefWidth="738.0">
+   <Label layoutX="71.0" prefHeight="32.0" prefWidth="175.0" text="%Band" />
+    <ComboBox fx:id="comboBand" layoutX="71.0" layoutY="25.0" prefHeight="32.0" prefWidth="175.0" />
+   <Label layoutX="465.0" prefHeight="32.0" prefWidth="134.0" text="%Tickets" />
+    <ComboBox fx:id="comboPlace" layoutX="268.0" layoutY="25.0" prefHeight="32.0" prefWidth="175.0" />
+   <Label layoutX="268.0" prefHeight="32.0" prefWidth="175.0" text="%Place" />
+    <ComboBox fx:id="comboTickets" layoutX="465.0" layoutY="25.0" prefHeight="32.0" prefWidth="134.0" />
+    <DatePicker fx:id="datePicker" editable="false" layoutX="621.0" layoutY="25.0" prefHeight="32.0" prefWidth="110.0" />
+   <Label layoutX="621.0" prefHeight="32.0" prefWidth="110.0" text="%Date" />
+    <Button fx:id="clearBtn" layoutX="753.0" layoutY="25.0" mnemonicParsing="false" onAction="#clearQuery" prefHeight="32.0" text="CLEAR" />
+   <Label fx:id="lblDiscounts" layoutX="271.75" layoutY="65.0" prefHeight="32.0" text="Discounts are only applied 30 days or more before the concert" />
+    <TableView fx:id="tblConcerts" layoutX="71.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="300.0" prefWidth="738.0">
         <columns>
             <TableColumn fx:id="qc1" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" reorderable="false" resizable="false" text="%Concert" />
             <TableColumn fx:id="qc2" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" reorderable="false" resizable="false" text="%Place" />
@@ -26,8 +32,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
         </columnResizePolicy>
     </TableView>
-    <Button fx:id="btnBuy" disable="true" layoutX="417.5" layoutY="465.0" mnemonicParsing="false" onAction="#buyButton" prefHeight="32.0" text="Book" visible="false" />
-    <Label fx:id="buyTxt" layoutX="383.0" layoutY="415.0" prefHeight="32.0" text="Log in to buy tickets!" />
-    <Label fx:id="lblMessage" layoutX="383.0" layoutY="465.0" prefHeight="32.0" />
-    <Button fx:id="clearBtn" layoutX="762.0" layoutY="25.0" mnemonicParsing="false" onAction="#clearQuery" prefHeight="32.0" text="CLEAR" />
+    <Button fx:id="btnBuy" disable="true" layoutX="402.5" layoutY="415.0" mnemonicParsing="false" onAction="#buyButton" prefHeight="32.0" text="Buy tickets" visible="false" />
+    <Label fx:id="buyTxt" layoutX="384.0" layoutY="415.0" prefHeight="32.0" text="Log in to buy tickets!" />
+    <Label fx:id="lblMessage" layoutX="350.0" layoutY="465.0" prefHeight="32.0" prefWidth="180.0" style="-fx-text-fill: green" />
 </AnchorPane>

@@ -2,9 +2,11 @@ package eus.ehu.concerticket.domain;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+import java.util.Vector;
+
 
 @Entity
-@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING)
 @Table(name = "USERS")
 public class User {
 
@@ -12,14 +14,16 @@ public class User {
     private String email;
     private String username;
     private String password;
+    private boolean staff;
 
     public User() {
     }
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, boolean staff) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.staff = staff;
     }
 
     public String getEmail() {
@@ -44,6 +48,10 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public boolean isStaff() {
+        return staff;
     }
 
     public String toString2() {
